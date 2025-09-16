@@ -1,6 +1,15 @@
 <resources>
-    <string name="app_name">karen-and</string>
+    <string name="app_name">Karen</string>
+    <string name="open_menu">Abrir menú</string>
     <string name="title_activity_login_screen">LoginScreen</string>
     <string name="login_title">Iniciar sesión</string>
     <string name="login_button_text">Ingresar</string>
+
+    <string name="home">Inicio</string>
+
+    <string name="profile">Perfil</string>
+
+    <string name="chat">Chat</string>
+
+    <string name="classes">Clases</string>
 </resources>
