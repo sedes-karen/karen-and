@@ -47,7 +47,7 @@ fun LoginScreen(
         )
 
         AppButton(stringResource(R.string.login_button_text)) {
-            viewModel.submit()
+            viewModel.submit(onNavigateHome)
         }
 
         //TODO: añadir los iconitos/botoncitos de login con google, facebook y github, pero NO implementarlos por ahora

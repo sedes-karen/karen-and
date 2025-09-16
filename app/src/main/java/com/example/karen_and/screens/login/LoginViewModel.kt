@@ -1,8 +1,10 @@
 package com.example.karen_and.screens.login
 
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.karen_and.network.LoginService
 import com.example.karen_and.ui.ui_events.UIEvents
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +31,7 @@ class LoginViewModel : ViewModel() {
 
     }
 
-    fun submit() {
+    fun submit(navigateToHome: () -> Unit) {
 
         //TODO: validar que el mail tenga formato y la contraseña este escrita
 
@@ -39,13 +41,21 @@ class LoginViewModel : ViewModel() {
 
             _state.update { it.copy(isLoading = true) }
 
-            val result = LoginService.login(_state.value.email, _state.value.password)
+            //@TODO: remplazar el api call de test al endpoint correspondiente
+            // val result = LoginService.login(_state.value.email, _state.value.password)
+            val result = LoginService.test()
 
             result.onSuccess {
                 //TODO: guardar el token y datos del user y redirigir a la home screen
+
+                Log.i("LOGIN::::", "Todo bien")
+                navigateToHome()
             }
                 .onFailure {
+                    Log.i("LOGIN::::", "Hubo un error" + it.toString())
                     //TODO: mostrar un snackbar/toast con un mensajito de error
+
+                    _events.emit(UIEvents.ShowToast("Ha ocurrido un error"))
                 }
         }
     }
