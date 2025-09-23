@@ -24,35 +24,40 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    // TODO: actualizar el state y conectarla a un textfield en la LoginScreen
     fun onPasswordChange(newPass: String) {
-
-    }
-
-    fun submit() {
-
-        //TODO: validar que el mail tenga formato y la contraseña este escrita
-
-        viewModelScope.launch {
-            // esto muestra un popup cuando tocas el botoncito, pueden borrarlo
-            _events.emit(UIEvents.ShowSnackbar(("Email: ${_state.value.email}, pass: ${_state.value.password}")))
-
-            _state.update { it.copy(isLoading = true) }
-
-            val result = LoginService.login(_state.value.email, _state.value.password)
-
-            result.onSuccess {
-                //TODO: guardar el token y datos del user y redirigir a la home screen
-            }
-                .onFailure {
-                    //TODO: mostrar un snackbar/toast con un mensajito de error
-                }
+        _state.update {
+            val updated = it.copy(password = newPass)
+            updated.copy(isFormValid = validate(updated))
         }
     }
 
+    fun submit() {
+        if (_state.value.isFormValid) {
+            viewModelScope.launch {
+                _state.update { it.copy(isLoading = true) }
+
+                val result = LoginService.login(_state.value.email, _state.value.password)
+
+                result
+                    .onSuccess {
+                        _events.emit(UIEvents.ShowSnackbar("Sesión iniciada correctamente"))
+                        _events.emit(UIEvents.NavigateToHome)
+                    }
+                    .onFailure { error ->
+                        _events.emit(UIEvents.ShowSnackbar(error.message ?: "Ocurrió un error"))
+                    }
+
+                _state.update { it.copy(isLoading = false) }
+            }
+        } else {
+            viewModelScope.launch {
+                _events.emit(UIEvents.ShowSnackbar("Email o contraseña incorrectas. Por favor, revisa los campos"))
+            }
+        }
+    }
 
     private fun validate(state: LoginState): Boolean {
-        val emailOk = Patterns.EMAIL_ADDRESS.matcher(state.email).matches() // verifica el formato del mail, osea algo@dominio.com
+        val emailOk = Patterns.EMAIL_ADDRESS.matcher(state.email).matches()
         val passOk = state.password.length >= 6
         return emailOk && passOk && !state.isLoading
     }

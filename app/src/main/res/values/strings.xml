@@ -3,4 +3,10 @@
     <string name="title_activity_login_screen">LoginScreen</string>
     <string name="login_title">Iniciar sesión</string>
     <string name="login_button_text">Ingresar</string>
+    <string name="email_label">Email</string>
+    <string name="email_placeholder">someone@example.com</string>
+    <string name="password_label">Contraseña</string>
+    <string name="login_text">Iniciar con</string>
+    <string name="register_link_title">¿No tienes una cuenta?</string>
+    <string name="register_link">Registrarse</string>
 </resources>
