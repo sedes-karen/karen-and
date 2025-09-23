@@ -38,7 +38,7 @@ fun AppButton(
         border = border,
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp)
+            .padding(horizontal = 10.dp, vertical = 5.dp)
     ) {
         if (loading) {
             CircularProgressIndicator(

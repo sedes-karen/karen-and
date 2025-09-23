@@ -21,5 +21,6 @@ object LoginService {
     private val api: LoginApi = RetrofitClient.create(LoginApi::class.java)
 
     suspend fun login(email: String, password: String): Result<LoginResponse> =
-        runCatching { api.login(LoginRequest(email, password)) }
+        runCatching { api.login(LoginRequest(email, password))
+    }
 }

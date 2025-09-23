@@ -51,7 +51,6 @@ fun LoginScreen(
         viewModel.events.collect { event ->
             when (event) {
                 is UIEvents.ShowSnackbar -> showSnackbar(event.message)
-                is UIEvents.NavigateToHome -> onNavigateHome()
                 else -> {}
             }
         }
@@ -60,8 +59,8 @@ fun LoginScreen(
     Column (
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = MaterialTheme.colorScheme.background)
-            .padding(16.dp),
+            .padding(16.dp)
+            .background(color = MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
 
@@ -70,7 +69,8 @@ fun LoginScreen(
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
-                .padding(top = 40.dp)
+                .padding(top = 40.dp, bottom = 40.dp)
+                .size(300.dp)
             )
 
         Text(
@@ -143,19 +143,19 @@ fun LoginScreen(
             )
 
             Image(
-                painter = painterResource(R.drawable.logo_google),
+                painter = painterResource(R.drawable.google_logo),
                 contentDescription = "Login con Google",
                 modifier = Modifier.size(40.dp)
             )
             Spacer(modifier = Modifier.width(20.dp))
             Image(
-                painter = painterResource(R.drawable.logo_facebook),
+                painter = painterResource(R.drawable.facebook_logo),
                 contentDescription = "Login con Facebook",
                 modifier = Modifier.size(40.dp)
             )
             Spacer(modifier = Modifier.width(20.dp))
             Image(
-                painter = painterResource(R.drawable.logo_github),
+                painter = painterResource(R.drawable.github_logo),
                 contentDescription = "Login con GitHub",
                 modifier = Modifier.size(40.dp)
             )

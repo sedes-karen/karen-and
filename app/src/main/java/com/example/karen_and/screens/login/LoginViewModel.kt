@@ -41,7 +41,6 @@ class LoginViewModel : ViewModel() {
                 result
                     .onSuccess {
                         _events.emit(UIEvents.ShowSnackbar("Sesión iniciada correctamente"))
-                        _events.emit(UIEvents.NavigateToHome)
                     }
                     .onFailure { error ->
                         _events.emit(UIEvents.ShowSnackbar(error.message ?: "Ocurrió un error"))
@@ -51,7 +50,7 @@ class LoginViewModel : ViewModel() {
             }
         } else {
             viewModelScope.launch {
-                _events.emit(UIEvents.ShowSnackbar("Email o contraseña incorrectas. Por favor, revisa los campos"))
+                _events.emit(UIEvents.ShowSnackbar("Email o contraseña incorrectas. Por favor, revisar los campos"))
             }
         }
     }

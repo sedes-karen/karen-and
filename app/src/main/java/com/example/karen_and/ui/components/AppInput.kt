@@ -51,10 +51,10 @@ fun AppInput(
                 focusedContainerColor = containerColor,
                 unfocusedTextColor = contentColor,
                 focusedTextColor = contentColor,
-                disabledContainerColor = Color.Gray,
-                disabledTextColor = Color.White,
                 unfocusedIndicatorColor = indicatorColor,
                 focusedIndicatorColor = indicatorColor,
+                disabledContainerColor = Color.Gray,
+                disabledTextColor = Color.White,
             ),
 
         )
