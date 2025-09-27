@@ -1,19 +1,34 @@
 package com.example.karen_and.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.karen_and.screens.chat.ChatScreen
+import com.example.karen_and.screens.classes.ClassesScreen
+import com.example.karen_and.screens.home.HomeScreen
 import com.example.karen_and.screens.login.LoginScreen
+import com.example.karen_and.screens.profile.ProfileScreen
 
 @Composable
 fun AppNavGraph(
     navController: NavHostController,
     showSnackbar: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.LOGIN
+        startDestination = Routes.LOGIN,
+        enterTransition = {
+            EnterTransition.None
+        },
+        popEnterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
+        popExitTransition = { ExitTransition.None }
+
     ) {
         composable(Routes.LOGIN) {
             LoginScreen(
@@ -34,6 +49,15 @@ fun AppNavGraph(
               showSnackbar = showSnackbar,
             )
         }
+
+        composable(Routes.HOME) { HomeScreen(modifier)  }
+
+        composable(Routes.PROFILE) { ProfileScreen(modifier) }
+        composable(Routes.CHAT) { ChatScreen(modifier) }
+        composable(Routes.CLASSES) { ClassesScreen(modifier) }
+
+        //@TODO: añadir la ruta de sign up
+        //composable(Routes.SIGN_UP) {}
     }
 
 }
