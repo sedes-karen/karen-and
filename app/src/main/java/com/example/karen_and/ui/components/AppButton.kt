@@ -1,5 +1,6 @@
 package com.example.karen_and.ui.components
 
+import androidx.compose.runtime.Composable
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -9,7 +10,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -28,7 +28,7 @@ fun AppButton(
     Button(
         onClick = onClick,
         enabled = enabled && !loading,
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(30.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,
             contentColor = contentColor,
@@ -38,7 +38,7 @@ fun AppButton(
         border = border,
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 10.dp, vertical = 5.dp)
     ) {
         if (loading) {
             CircularProgressIndicator(
