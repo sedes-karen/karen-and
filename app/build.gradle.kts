@@ -17,7 +17,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "API_URL", "\"http://10.0.2.2:8000/api/\"")
+        buildConfigField("String", "API_URL", "\"http://10.0.2.2/api/\"")
     }
 
     buildTypes {
@@ -39,6 +39,13 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+    }
+    tasks.withType<Test> {
+        testLogging {
+            events("passed", "skipped", "failed")
+            exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+            showStandardStreams = true
+        }
     }
 }
 
