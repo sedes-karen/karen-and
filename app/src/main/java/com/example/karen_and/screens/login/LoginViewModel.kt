@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import com.example.karen_and.network.LoginService
 
 class LoginViewModel : ViewModel() {
     private val _state = MutableStateFlow(LoginState())

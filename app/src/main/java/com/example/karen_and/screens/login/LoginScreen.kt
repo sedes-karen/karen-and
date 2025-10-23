@@ -51,6 +51,7 @@ fun LoginScreen(
         viewModel.events.collect { event ->
             when (event) {
                 is UIEvents.ShowSnackbar -> showSnackbar(event.message)
+                is UIEvents.Navigate -> onNavigateHome()
                 else -> {}
             }
         }
