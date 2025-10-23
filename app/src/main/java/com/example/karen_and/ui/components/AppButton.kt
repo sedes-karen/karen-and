@@ -30,7 +30,7 @@ fun AppButton(
         enabled = enabled && !loading,
         shape = RoundedCornerShape(30.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = containerColor,
+            containerColor = MaterialTheme.colorScheme.primary,
             contentColor = contentColor,
             disabledContainerColor = Color.Gray,
             disabledContentColor = Color.White
