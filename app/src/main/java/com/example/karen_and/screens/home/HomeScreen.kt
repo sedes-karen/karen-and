@@ -30,11 +30,9 @@ fun HomeScreen(
     val coroutineScope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
-    // Definición de colores
     val purpleColor = Color(0xFF8A2BE2)
     val whiteColor = Color.White
 
-    // Código de la barra de estado (SystemUiController) omitido
 
     ModalNavigationDrawer(
         drawerContent = {
@@ -76,7 +74,6 @@ fun HomeScreen(
                         }
                     },
                     actions = {
-                        // Botón de perfil eliminado
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = purpleColor
@@ -87,37 +84,33 @@ fun HomeScreen(
             Column(
                 modifier = modifier
                     .fillMaxSize()
-                    .background(whiteColor) // Fondo de la pantalla blanco
+                    .background(whiteColor)
                     .padding(innerPadding)
                     .padding(horizontal = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
-                // --- Contenido Superior (Bienvenida y Imagen) ---
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // **¡CAMBIO CLAVE 1: TEXTO BIENVENIDO ARRIBA DE LA IMAGEN!**
                     Text(
                         "Bienvenido",
-                        color = Color.Black, // Color negro
-                        fontSize = 20.sp, // Tamaño un poco más grande
-                        fontWeight = FontWeight.Bold // Resaltado (negrita)
+                        color = Color.Black,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
                     )
 
-                    Spacer(modifier = Modifier.height(16.dp)) // Espacio entre texto e imagen
+                    Spacer(modifier = Modifier.height(16.dp))
 
                     Image(
                         painter = painterResource(id = R.drawable.ic_welcome),
                         contentDescription = "Bienvenido",
                         modifier = Modifier.size(200.dp)
                     )
-                    // **FIN DEL CONTENIDO SUPERIOR**
 
                     Spacer(modifier = Modifier.height(32.dp))
                 }
 
-                // --- Apartado de Reportar Error (Parte Inferior) ---
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
