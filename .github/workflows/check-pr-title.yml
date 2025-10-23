@@ -1,0 +1,26 @@
+name: 'Validate PR Title'
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR Title Format
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const title = context.payload.pull_request.title;
+            const validPrefixes = /^(feat|fix|docs|refactor|test|chore)(\(.+\))?: (.+)/;
+
+            if (!validPrefixes.test(title)) {
+              core.setFailed(`❌ El título de la PR no cumple con el formato.
+              Debe comenzar con uno de los prefijos válidos: feat, fix, docs, refactor, test, chore.
+              Ejemplo de titulo de PR valido: 'feat(scope): add new feature' o 'fix: login loader bug'`);
+            } else {
+              console.log(`✅ Título de la PR válido: ${title}`);
+            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
