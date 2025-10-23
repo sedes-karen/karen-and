@@ -1,14 +1,8 @@
-package com.example.karen_and.screens.login
-
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -27,8 +21,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
@@ -40,6 +41,8 @@ import com.example.karen_and.ui.components.AppButton
 import com.example.karen_and.ui.components.AppInput
 import com.example.karen_and.ui.theme.AppTypography
 import com.example.karen_and.ui.ui_events.UIEvents
+import com.example.karen_and.screens.login.LoginViewModel
+import com.example.karen_and.screens.login.LoginViewModel.LoginViewModelFactory
 
 @Composable
 fun LoginScreen(
@@ -202,6 +205,7 @@ fun LoginScreen(
         }
     }
 }
+
 
 @Preview
 @Composable

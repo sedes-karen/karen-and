@@ -1,5 +1,6 @@
 package com.example.karen_and.navigation
 
+import LoginScreen
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
@@ -10,7 +11,6 @@ import androidx.navigation.compose.composable
 import com.example.karen_and.screens.chat.ChatScreen
 import com.example.karen_and.screens.classes.ClassesScreen
 import com.example.karen_and.screens.home.HomeScreen
-import com.example.karen_and.screens.login.LoginScreen
 import com.example.karen_and.screens.profile.ProfileScreen
 import com.example.karen_and.screens.teacher_screens.accept_student.AcceptStudentScreen
 
@@ -44,7 +44,7 @@ fun AppNavGraph(
                         }
                     }
                 },
-                showSnackbar = showSnackbar,
+              showSnackbar = showSnackbar,
             )
         }
         composable(Routes.HOME) {
