@@ -28,3 +28,5 @@ fun AppTopBar(
         }
     )
 }
+
+annotation class AppTopBar

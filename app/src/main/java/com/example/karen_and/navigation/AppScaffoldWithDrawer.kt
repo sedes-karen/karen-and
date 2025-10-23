@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.karen_and.navigation.AppDrawerContent
 import com.example.karen_and.navigation.AppTopBar
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 @Composable
@@ -43,7 +44,8 @@ fun AppScaffoldWithDrawer(
     ) {
         Scaffold(
             topBar = {
-                if(selectedRoute in appBarRoutes) {
+                val appBarRoutes = null
+                if(appBarRoutes?.contains(selectedRoute.toString()) == true ) {
                     AppTopBar(
                         title = title,
                         onMenuClick = { scope.launch { drawerState.open() } }
@@ -56,4 +58,9 @@ fun AppScaffoldWithDrawer(
             content(Modifier.padding(innerPadding))
         }
     }
+}
+
+@Composable
+fun AppTopBar(title: String, onMenuClick: () -> Job) {
+    TODO("Not yet implemented")
 }

@@ -13,7 +13,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.karen_and.navigation.AppNavGraph
 import com.example.karen_and.navigation.Routes
-import com.example.karen_and.ui.components.AppBottomBar
+import com.example.karen_and.ui.components.AppBottomBar // NOTA: Ya no se usa, pero lo mantengo por si acaso.
 import com.example.karen_and.ui.components.AppScaffoldWithDrawer
 import com.example.karen_and.ui.components.appBarRoutes
 import com.example.karen_and.ui.theme.KarenandTheme
@@ -22,7 +22,6 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
         setContent {
             val navController = rememberNavController()
@@ -48,9 +47,9 @@ class MainActivity : ComponentActivity() {
                                 restoreState = true
                             }
                         },
-                        bottomBar = {
-                            AppBottomBar(navController)
-                        },
+                        // **¡CAMBIO CLAVE AQUÍ!**
+                        // Se elimina el parámetro bottomBar para eliminar la barra de navegación inferior.
+                        // bottomBar = { AppBottomBar(navController) },
                         snackbarHostState = snackbarHostState
                     ) {
                         AppNavGraph(
