@@ -3,7 +3,7 @@
 https://github.com/sedes-karen/karen-and/issues/
 
 ## Scope
-****
+
 Una descripción de el objetivo de esta PR.
 
 ## Merge Checklist
