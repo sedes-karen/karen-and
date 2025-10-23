@@ -60,9 +60,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // navigation graph
-    val nav_version = "2.9.3"
-    implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation(libs.androidx.navigation.compose)
 
     // retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -70,6 +68,4 @@ dependencies {
 
     // material icons
     implementation ("androidx.compose.material:material-icons-extended")
-
-
 }

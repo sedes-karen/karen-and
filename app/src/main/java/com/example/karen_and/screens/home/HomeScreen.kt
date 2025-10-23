@@ -1,27 +1,156 @@
 package com.example.karen_and.screens.home
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.Icons
+import kotlinx.coroutines.launch
+import com.example.karen_and.R
+import com.example.karen_and.screens.AppDrawerContent
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
-    Column(modifier = modifier, verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    onNavigateToClasses: () -> Unit,
+    onNavigateToProfile: () -> Unit,
+    onNavigateToChat: () -> Unit
+) {
+    val coroutineScope = rememberCoroutineScope()
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
-        Text("Home 1", style = MaterialTheme.typography.titleLarge)
-        Text("Home 2", style = MaterialTheme.typography.titleLarge)
-        Text("Home 3", style = MaterialTheme.typography.titleLarge)
-        Text("Home 4", style = MaterialTheme.typography.titleLarge)
-        Text("Home 5", style = MaterialTheme.typography.titleLarge)
-        Text("Home 6", style = MaterialTheme.typography.titleLarge)
-        Text("Home 7", style = MaterialTheme.typography.titleLarge)
-        Text("Home 8", style = MaterialTheme.typography.titleLarge)
-        Text("Home", style = MaterialTheme.typography.titleLarge)
-        Text("Home", style = MaterialTheme.typography.titleLarge)
-        Text("Home", style = MaterialTheme.typography.titleLarge)
+    // Definición de colores
+    val purpleColor = Color(0xFF8A2BE2)
+    val whiteColor = Color.White
+
+    // Código de la barra de estado (SystemUiController) omitido
+
+    ModalNavigationDrawer(
+        drawerContent = {
+            ModalDrawerSheet(
+                modifier = Modifier.width(300.dp),
+                drawerContainerColor = purpleColor
+            ) {
+                AppDrawerContent(
+                    onNavigateToHome = { coroutineScope.launch { drawerState.close() } },
+                    onNavigateToProfile = {
+                        coroutineScope.launch { drawerState.close() }
+                        onNavigateToProfile()
+                    },
+                    onNavigateToClasses = onNavigateToClasses,
+                    onNavigateToChat = {
+                        coroutineScope.launch { drawerState.close() }
+                        onNavigateToChat()
+                    }
+                )
+            }
+        },
+        drawerState = drawerState
+    ) {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text("Pantalla Principal", color = whiteColor) },
+                    navigationIcon = {
+                        IconButton(onClick = {
+                            coroutineScope.launch {
+                                drawerState.apply { if (isClosed) open() else close() }
+                            }
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.Menu,
+                                contentDescription = "Menú",
+                                tint = whiteColor
+                            )
+                        }
+                    },
+                    actions = {
+                        // Botón de perfil eliminado
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = purpleColor
+                    )
+                )
+            }
+        ) { innerPadding ->
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .background(whiteColor) // Fondo de la pantalla blanco
+                    .padding(innerPadding)
+                    .padding(horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                // --- Contenido Superior (Bienvenida y Imagen) ---
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // **¡CAMBIO CLAVE 1: TEXTO BIENVENIDO ARRIBA DE LA IMAGEN!**
+                    Text(
+                        "Bienvenido",
+                        color = Color.Black, // Color negro
+                        fontSize = 20.sp, // Tamaño un poco más grande
+                        fontWeight = FontWeight.Bold // Resaltado (negrita)
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp)) // Espacio entre texto e imagen
+
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_welcome),
+                        contentDescription = "Bienvenido",
+                        modifier = Modifier.size(200.dp)
+                    )
+                    // **FIN DEL CONTENIDO SUPERIOR**
+
+                    Spacer(modifier = Modifier.height(32.dp))
+                }
+
+                // --- Apartado de Reportar Error (Parte Inferior) ---
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Divider(
+                        modifier = Modifier
+                            .fillMaxWidth(0.8f)
+                            .padding(bottom = 8.dp),
+                        color = Color.LightGray.copy(alpha = 0.7f),
+                        thickness = 1.dp
+                    )
+
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "¿Encontraste un problema?",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.Gray
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text(
+                            text = "Reportar error",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = purpleColor,
+                            modifier = Modifier.clickable { /* Lógica para reportar error */ }
+                        )
+                    }
+                }
+            }
+        }
     }
 }
