@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import com.example.karen_and.screens.login.LoginState
+
 
 class LoginViewModel : ViewModel() {
     private val _state = MutableStateFlow(LoginState())
@@ -32,6 +34,13 @@ class LoginViewModel : ViewModel() {
         }
     }
 
+    fun submit(navigateToHome: () -> Unit) {
+
+        // --- SOLUCIÓN TEMPORAL PARA PROBAR LA NAVEGACIÓN ---
+        // Llama a la navegación directamente para que el botón funcione sin la API.
+        navigateToHome()
+
+        //TODO: validar que el mail tenga formato y la contraseña este escrita
     fun submit() {
         if (_state.value.isFormValid) {
             viewModelScope.launch {
@@ -47,6 +56,15 @@ class LoginViewModel : ViewModel() {
                         _events.emit(UIEvents.ShowSnackbar(error.message ?: "Ocurrió un error"))
                     }
 
+            //@TODO: remplazar el api call de test al endpoint correspondiente
+            // val result = LoginService.login(_state.value.email, _state.value.password)
+            val result = LoginService.test()
+
+            result.onSuccess {
+                //TODO: guardar el token y datos del user y redirigir a la home screen
+
+                Log.i("LOGIN::::", "Todo bien")
+                // navigateToHome() // Esta línea ya no es necesaria aquí
                 _state.update { it.copy(isLoading = false) }
             }
         } else {
