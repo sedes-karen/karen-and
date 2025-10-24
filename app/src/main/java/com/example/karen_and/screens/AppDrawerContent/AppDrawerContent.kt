@@ -34,15 +34,13 @@ fun AppDrawerContent(
 ) {
     val classes = listOf("Programación I", "Programación II", "Bases de Datos")
     var expanded by remember { mutableStateOf(false) }
-    var selectedText by remember { mutableStateOf("Programación II") } // Cambiado a "Programación II" para simular la imagen
-
+    var selectedText by remember { mutableStateOf("Programación II") }
     val whiteColor = Color.White
     val lightGrayColor = Color.LightGray.copy(alpha = 0.8f)
 
-    // Nuevo color para la "pastilla" de búsqueda (Gris claro/transparente)
     val chipBackgroundColor = Color.White.copy(alpha = 0.2f)
-    val chipTextColor = whiteColor // El texto dentro de la pastilla es blanco
-    val chipLabelColor = lightGrayColor // El label es gris claro
+    val chipTextColor = whiteColor
+    val chipLabelColor = lightGrayColor
 
 
     Column(
@@ -52,7 +50,7 @@ fun AppDrawerContent(
             .padding(top = 24.dp)
         ,horizontalAlignment = Alignment.Start
     ) {
-        // ... (Sección de perfil sin cambios)
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -75,10 +73,9 @@ fun AppDrawerContent(
         Spacer(modifier = Modifier.height(16.dp))
         Divider(color = whiteColor.copy(alpha = 0.5f), thickness = 1.dp)
 
-        // --- APARTADO DE BUSCAR CLASE (Diseño de Pastilla) ---
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text("Buscar clase", color = chipTextColor, fontSize = 14.sp)
+        Text("Buscar materia", color = chipTextColor, fontSize = 14.sp)
         Spacer(modifier = Modifier.height(8.dp))
 
         ExposedDropdownMenuBox(
@@ -97,26 +94,23 @@ fun AppDrawerContent(
                     Icon(
                         imageVector = Icons.Default.ArrowDropDown,
                         contentDescription = "Expandir",
-                        tint = chipTextColor // Ícono blanco dentro de la pastilla
+                        tint = chipTextColor
                     )
                 },
-                shape = RoundedCornerShape(24.dp), // **APLICAMOS LA FORMA DE PASTILLA**
+                shape = RoundedCornerShape(24.dp),
                 colors = ExposedDropdownMenuDefaults.textFieldColors(
-                    // Color de fondo de la pastilla
+
                     unfocusedContainerColor = chipBackgroundColor,
                     focusedContainerColor = chipBackgroundColor,
 
-                    // Eliminamos los indicadores para una apariencia limpia
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,
 
-                    // Colores de los elementos dentro de la pastilla
                     focusedTrailingIconColor = chipTextColor,
                     unfocusedTrailingIconColor = chipTextColor,
                     focusedTextColor = chipTextColor,
                     unfocusedTextColor = chipTextColor,
 
-                    // Desactivamos el cursor
                     cursorColor = Color.Transparent,
 
                     ),
@@ -143,10 +137,8 @@ fun AppDrawerContent(
         Spacer(modifier = Modifier.height(16.dp))
         Divider(color = whiteColor.copy(alpha = 0.5f), thickness = 1.dp)
         Spacer(modifier = Modifier.height(16.dp))
-        // --- FIN DEL APARTADO DE BUSCAR CLASE ---
 
 
-        // Opciones de navegación del menú (sin cambios)
         DrawerItem(Icons.Default.Home, "Inicio", onNavigateToHome, whiteColor)
         DrawerItem(Icons.Default.Person, "Mi perfil", onNavigateToProfile, whiteColor)
         DrawerItem(Icons.Default.List, "Clases", onNavigateToClasses, whiteColor)
@@ -154,7 +146,6 @@ fun AppDrawerContent(
     }
 }
 
-// ... (Resto de las funciones permanecen igual)
 @Composable
 fun DrawerItem(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
