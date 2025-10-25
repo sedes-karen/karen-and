@@ -1,6 +1,5 @@
 package com.example.karen_and.navigation
 
-import LoginScreen
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
@@ -8,10 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-
 import com.example.karen_and.screens.chat.ChatScreen
 import com.example.karen_and.screens.classes.ClassesScreen
 import com.example.karen_and.screens.home.HomeScreen
+import com.example.karen_and.screens.login.LoginScreen
 import com.example.karen_and.screens.profile.ProfileScreen
 
 @Composable

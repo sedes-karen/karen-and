@@ -1,5 +1,6 @@
 package com.example.karen_and.screens.login
 
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,8 +12,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import com.example.karen_and.screens.login.LoginState
-
 
 class LoginViewModel : ViewModel() {
     private val _state = MutableStateFlow(LoginState())
@@ -34,38 +33,22 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    fun submit(navigateToHome: () -> Unit) {
-
-        // --- SOLUCIÓN TEMPORAL PARA PROBAR LA NAVEGACIÓN ---
-        // Llama a la navegación directamente para que el botón funcione sin la API.
-        navigateToHome()
-
-        //TODO: validar que el mail tenga formato y la contraseña este escrita
     fun submit() {
         if (_state.value.isFormValid) {
             viewModelScope.launch {
                 _state.update { it.copy(isLoading = true) }
 
-                val result = LoginService.login(_state.value.email, _state.value.password)
+                val loginResult = LoginService.login(_state.value.email, _state.value.password)
 
-                result
+                loginResult
                     .onSuccess {
                         _events.emit(UIEvents.ShowSnackbar("Sesión iniciada correctamente"))
+                        testApiCall()
                     }
                     .onFailure { error ->
-                        _events.emit(UIEvents.ShowSnackbar(error.message ?: "Ocurrió un error"))
+                        _events.emit(UIEvents.ShowSnackbar(error.message ?: "Ocurrió un error en el login"))
+                        _state.update { it.copy(isLoading = false) }
                     }
-
-            //@TODO: remplazar el api call de test al endpoint correspondiente
-            // val result = LoginService.login(_state.value.email, _state.value.password)
-            val result = LoginService.test()
-
-            result.onSuccess {
-                //TODO: guardar el token y datos del user y redirigir a la home screen
-
-                Log.i("LOGIN::::", "Todo bien")
-                // navigateToHome() // Esta línea ya no es necesaria aquí
-                _state.update { it.copy(isLoading = false) }
             }
         } else {
             viewModelScope.launch {
@@ -74,10 +57,24 @@ class LoginViewModel : ViewModel() {
         }
     }
 
+    private fun testApiCall() {
+        viewModelScope.launch {
+            val testResult = LoginService.test()
+
+            testResult.onSuccess {
+                Log.i("LOGIN::::", "Todo bien en el test")
+                _state.update { it.copy(isLoading = false) }
+            }
+                .onFailure {
+                    Log.e("LOGIN::::", "Error en el test")
+                    _state.update { it.copy(isLoading = false) }
+                }
+        }
+    }
+
     private fun validate(state: LoginState): Boolean {
         val emailOk = Patterns.EMAIL_ADDRESS.matcher(state.email).matches()
         val passOk = state.password.length >= 6
         return emailOk && passOk && !state.isLoading
     }
-
 }
