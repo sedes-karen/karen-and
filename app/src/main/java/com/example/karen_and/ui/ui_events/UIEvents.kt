@@ -8,4 +8,3 @@ sealed class UIEvents {
     object NavigateBack : UIEvents()
     data class Navigate(val route: String) : UIEvents()
 }
-}
