@@ -1,5 +1,6 @@
 package com.example.karen_and.screens.login
 
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -37,17 +38,17 @@ class LoginViewModel : ViewModel() {
             viewModelScope.launch {
                 _state.update { it.copy(isLoading = true) }
 
-                val result = LoginService.login(_state.value.email, _state.value.password)
+                val loginResult = LoginService.login(_state.value.email, _state.value.password)
 
-                result
+                loginResult
                     .onSuccess {
                         _events.emit(UIEvents.ShowSnackbar("Sesión iniciada correctamente"))
+                        testApiCall()
                     }
                     .onFailure { error ->
-                        _events.emit(UIEvents.ShowSnackbar(error.message ?: "Ocurrió un error"))
+                        _events.emit(UIEvents.ShowSnackbar(error.message ?: "Ocurrió un error en el login"))
+                        _state.update { it.copy(isLoading = false) }
                     }
-
-                _state.update { it.copy(isLoading = false) }
             }
         } else {
             viewModelScope.launch {
@@ -56,10 +57,24 @@ class LoginViewModel : ViewModel() {
         }
     }
 
+    private fun testApiCall() {
+        viewModelScope.launch {
+            val testResult = LoginService.test()
+
+            testResult.onSuccess {
+                Log.i("LOGIN::::", "Todo bien en el test")
+                _state.update { it.copy(isLoading = false) }
+            }
+                .onFailure {
+                    Log.e("LOGIN::::", "Error en el test")
+                    _state.update { it.copy(isLoading = false) }
+                }
+        }
+    }
+
     private fun validate(state: LoginState): Boolean {
         val emailOk = Patterns.EMAIL_ADDRESS.matcher(state.email).matches()
         val passOk = state.password.length >= 6
         return emailOk && passOk && !state.isLoading
     }
-
 }
