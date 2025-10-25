@@ -1,11 +1,8 @@
 package com.example.karen_and.screens.login
 
-import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.karen_and.data.TokenStore
 import com.example.karen_and.network.LoginService
 import com.example.karen_and.ui.ui_events.UIEvents
 import kotlinx.coroutines.flow.MutableSharedFlow
