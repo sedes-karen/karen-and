@@ -305,7 +305,9 @@ fun ClassDetails( //////////FUNCIÓN PRINCIPAL DE TODA LA PAGINA ---------------
                     }
                 }
             },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color(0xFFE0E0E0)),
             text = {
                 Column(
                     modifier = Modifier
