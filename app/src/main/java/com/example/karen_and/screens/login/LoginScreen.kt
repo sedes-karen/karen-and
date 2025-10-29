@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,6 +30,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.runtime.remember
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -42,7 +44,7 @@ import com.example.karen_and.ui.components.AppInput
 import com.example.karen_and.ui.theme.AppTypography
 import com.example.karen_and.ui.ui_events.UIEvents
 import com.example.karen_and.screens.login.LoginViewModel
-import com.example.karen_and.screens.login.LoginViewModel.LoginViewModelFactory
+import com.example.karen_and.screens.login.LoginViewModelFactory
 
 @Composable
 fun LoginScreen(
@@ -205,7 +207,6 @@ fun LoginScreen(
         }
     }
 }
-
 
 @Preview
 @Composable

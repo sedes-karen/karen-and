@@ -23,10 +23,13 @@ fun AppNavGraph(
     NavHost(
         navController = navController,
         startDestination = Routes.LOGIN,
-        enterTransition = { EnterTransition.None },
+        enterTransition = {
+            EnterTransition.None
+        },
         popEnterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popExitTransition = { ExitTransition.None }
+
     ) {
         composable(Routes.LOGIN) {
             LoginScreen(
