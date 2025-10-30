@@ -23,6 +23,6 @@
     <string name="open_menu">Abrir menú</string>
     <string name="success_message_login">Sesión iniciada correctamente</string>
     <string name="error_message">Ocurrió un error</string>
-    <string name="continue_button_text">Continuear</string>
+    <string name="continue_button_text">Continuar</string>
     <string name="finish_button_text">Terminar</string>
 </resources>
