@@ -16,6 +16,9 @@ import com.example.karen_and.screens.profile.ProfileScreen
 import com.example.karen_and.screens.signup.SignUpScreen
 import com.example.karen_and.screens.splash.SplashScreen
 import com.example.karen_and.screens.teacher_screens.accept_student.AcceptStudentScreen
+import com.example.karen_and.screens.splash.SplashScreen
+import com.example.karen_and.screens.teacher_screens.accept_student.AcceptStudentScreen
+
 @Composable
 fun AppNavGraph(
     navController: NavHostController,
@@ -26,8 +29,8 @@ fun AppNavGraph(
         navController = navController,
         startDestination = Routes.SPLASH,
         enterTransition = { EnterTransition.None },
-        exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
         popExitTransition = { ExitTransition.None }
     ) {
         composable(Routes.SPLASH) {
@@ -49,7 +52,7 @@ fun AppNavGraph(
                         }
                     }
                 },
-              showSnackbar = showSnackbar,
+                showSnackbar = showSnackbar,
             )
         }
         composable(Routes.HOME) {
@@ -67,6 +70,11 @@ fun AppNavGraph(
         composable(Routes.CHAT) { ChatScreen(modifier) }
         composable(Routes.CLASSES) { ClassesScreen(modifier) }
 
+
+        composable(Routes.ACCEPT_STUDENTS) { AcceptStudentScreen(modifier) }
+
+        composable(Routes.CLASSES) { ClassesScreen(modifier) }
+
         composable(Routes.SIGN_UP) {
             SignUpScreen(
                 onNavigateLogin = {
@@ -82,8 +90,5 @@ fun AppNavGraph(
                 showSnackbar = showSnackbar
             )
         }
-        composable(Routes.CLASSES) { ClassesScreen(modifier) }
-        composable(Routes.ACCEPT_STUDENTS) { AcceptStudentScreen(modifier) }
-
     }
 }
