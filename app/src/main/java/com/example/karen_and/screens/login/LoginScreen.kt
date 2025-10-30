@@ -38,7 +38,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import com.example.karen_and.R
-import com.example.karen_and.models.UserRole
 import com.example.karen_and.ui.components.AppButton
 import com.example.karen_and.ui.components.AppInput
 import com.example.karen_and.ui.theme.AppTypography
@@ -54,14 +53,14 @@ fun LoginScreen(
 ) {
     val context = LocalContext.current
 
-    val tokenStore = remember {
+    val sessionStore = remember {
         val appCtx = context.applicationContext
         val prefs = appCtx.getSharedPreferences("karen_prefs", android.content.Context.MODE_PRIVATE)
-        com.example.karen_and.data.TokenStore(prefs)
+        com.example.karen_and.data.SessionStore(prefs)
     }
     // ViewModel con factory
     val viewModel: LoginViewModel = viewModel(
-        factory = LoginViewModelFactory(tokenStore)
+        factory = LoginViewModelFactory(sessionStore)
     )
 
 

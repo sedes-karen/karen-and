@@ -1,7 +1,6 @@
 package com.example.karen_and.screens.teacher_screens.accept_student
 
 import com.example.karen_and.models.UserModel
-import com.example.karen_and.models.UserStatus
 import kotlin.collections.listOf
 
 data class BatchResult(

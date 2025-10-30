@@ -1,21 +1,19 @@
 package com.example.karen_and.models
 
-enum class UserRole { TEACHER, STUDENT }
-
-enum class UserStatusEnum(val label: String) {
-    CREATED("created"),
-    ENABLED("enabled"),
-    SUSPENDED("suspended");
+import com.google.gson.annotations.SerializedName
 
 
-    override fun toString() = label
-
+enum class UserStatusEnum {
+    @SerializedName("created") CREATED,
+    @SerializedName("enabled") ENABLED,
+    @SerializedName("suspended") SUSPENDED
 }
 
-data class UserStatus(
-    val name: UserStatusEnum,
-)
+enum class UserType {
+    @SerializedName("teacher") TEACHER,
+    @SerializedName("student") STUDENT;
 
+}
 data class UserModel(
     val id: Int,
     val name: String,
@@ -25,5 +23,11 @@ data class UserModel(
     val user_status_id: Int?,
     val code_register: String?,
     val code_recovery: String?,
-    val status: UserStatusEnum,
+    val status: UserStatus,
+    val typeUser: UserType
+)
+
+
+data class UserStatus(
+    val name: UserStatusEnum               // 👈 enum mapeado por nombre
 )

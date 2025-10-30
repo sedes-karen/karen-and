@@ -1,6 +1,6 @@
-package com.example.karen_and.network
+package com.example.karen_and.network.services
 
-import com.example.karen_and.RetrofitClient
+import com.example.karen_and.network.RetrofitClient
 import com.example.karen_and.models.UserModel
 import retrofit2.http.Body
 import retrofit2.http.GET

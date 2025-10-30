@@ -1,10 +1,19 @@
 package com.example.karen_and.screens.teacher_screens.accept_student
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
@@ -15,8 +24,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -59,10 +71,33 @@ fun AcceptStudentScreen(
         } else if (state.errorMessage != null) {
             Text("Error: ${state.errorMessage}", color = Color.Red)
         } else {
-            LazyColumn {
-                items(state.students.size) { index ->
-                    Text("${state.students.get(index).name} ${state.students.get(index).lastname}")
+            LazyColumn(
+                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(vertical = 8.dp),
+
+
+            ) {
+                items(state.students.size) { i ->
+                    val u = state.students[i]
+                    val fullName = listOfNotNull(u.name, u.lastname.takeIf { it.isNotBlank() })
+                        .joinToString(" ")
+                    val selected = u.id in state.studentsSelected
+                    // si tenés fecha en tu modelo/DTO, formateala y pasala acá
+                    val dateRight: String? = null
+
+                    AcceptStudentItem(
+                        name = fullName,
+                        email = u.email,
+                        dateRight = dateRight,
+                        selected = selected,
+                        onToggleSelect = { viewModel.toggleSelection(u.id) },
+                        modifier = Modifier
+                    )
                 }
+
+                item { Spacer(Modifier.height(16.dp)) }
+
             }
         }
     }
@@ -79,5 +114,80 @@ fun AcceptStudentScreenPreview() {
                 .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp)
         )
+    }
+}
+
+
+
+@Composable
+fun AcceptStudentItem(
+    name: String,
+    email: String,
+    dateRight: String?,
+    selected: Boolean,
+    onToggleSelect: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val containerShape = RoundedCornerShape(20.dp)
+    val chipShape = RoundedCornerShape(10.dp)
+
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(containerShape)
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .clickable() { onToggleSelect() }
+            .padding(horizontal = 14.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        // Avatar cuadrado
+        Box(
+            modifier = Modifier
+                .size(44.dp)
+                .clip(chipShape)
+                .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.35f)),
+            contentAlignment = Alignment.Center
+        ) {
+            // Cuadradito interno marca selección
+            val innerAlpha = if (selected) 1f else 0f
+            Box(
+                modifier = Modifier
+                    .size(18.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .background(MaterialTheme.colorScheme.primary.copy(alpha = innerAlpha))
+            )
+        }
+
+        Spacer(Modifier.width(14.dp))
+
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = name,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                text = email,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+
+            if (!dateRight.isNullOrBlank()) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Text(
+                        text = dateRight,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        }
     }
 }

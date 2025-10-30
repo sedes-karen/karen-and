@@ -5,8 +5,8 @@ import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.karen_and.data.TokenStore
-import com.example.karen_and.network.LoginService
+import com.example.karen_and.data.SessionStore
+import com.example.karen_and.network.services.LoginService
 import com.example.karen_and.ui.ui_events.UIEvents
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +18,7 @@ import com.example.karen_and.screens.login.LoginState
 
 
 class LoginViewModel(
-    private val tokenStore: TokenStore
+    private val sessionStore: SessionStore
 ) : ViewModel() {
     private val _state = MutableStateFlow(LoginState())
     val state: StateFlow<LoginState> = _state
@@ -46,7 +46,7 @@ class LoginViewModel(
 
                 result
                     .onSuccess { data ->
-                        tokenStore.saveToken(data.token)
+                        sessionStore.saveSession(data.token, data.user.typeUser)
                         navigateToHome()
                     }
                     .onFailure { error ->
@@ -72,12 +72,12 @@ class LoginViewModel(
 }
 
 class LoginViewModelFactory(
-    private val tokenStore: TokenStore
+    private val sessionStore: SessionStore
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(tokenStore) as T
+            return LoginViewModel(sessionStore) as T  // 👈 le pasa la dependencia
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -12,6 +12,7 @@ import com.example.karen_and.screens.classes.ClassesScreen
 import com.example.karen_and.screens.home.HomeScreen
 import com.example.karen_and.screens.login.LoginScreen
 import com.example.karen_and.screens.profile.ProfileScreen
+import com.example.karen_and.screens.splash.SplashScreen
 import com.example.karen_and.screens.teacher_screens.accept_student.AcceptStudentScreen
 
 @Composable
@@ -22,15 +23,17 @@ fun AppNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.LOGIN,
-        enterTransition = {
-            EnterTransition.None
-        },
-        popEnterTransition = { EnterTransition.None },
+        startDestination = Routes.SPLASH,
+        enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
+        popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None }
 
+
     ) {
+        composable(Routes.SPLASH) {
+            SplashScreen(navController)
+        }
         composable(Routes.LOGIN) {
             LoginScreen(
                 onNavigateHome = {
@@ -71,5 +74,6 @@ fun AppNavGraph(
         //@TODO: añadir la ruta de sign up
         //composable(Routes.SIGN_UP) {}
         composable(Routes.SIGN_UP) {}
+
     }
 }

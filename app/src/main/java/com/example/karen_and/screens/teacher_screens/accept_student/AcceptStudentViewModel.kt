@@ -2,9 +2,8 @@ package com.example.karen_and.screens.teacher_screens.accept_student
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.karen_and.models.UserStatus
 import com.example.karen_and.models.UserStatusEnum
-import com.example.karen_and.network.AcceptStudentService
+import com.example.karen_and.network.services.AcceptStudentService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
