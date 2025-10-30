@@ -12,6 +12,7 @@ import com.example.karen_and.screens.classes.ClassesScreen
 import com.example.karen_and.screens.home.HomeScreen
 import com.example.karen_and.screens.login.LoginScreen
 import com.example.karen_and.screens.profile.ProfileScreen
+import com.example.karen_and.screens.teacher_screens.accept_student.AcceptStudentScreen
 
 @Composable
 fun AppNavGraph(
@@ -43,7 +44,7 @@ fun AppNavGraph(
                         }
                     }
                 },
-                showSnackbar = showSnackbar,
+              showSnackbar = showSnackbar,
             )
         }
         composable(Routes.HOME) {
@@ -60,5 +61,11 @@ fun AppNavGraph(
         composable(Routes.PROFILE) { ProfileScreen(modifier) }
         composable(Routes.CHAT) { ChatScreen(modifier) }
         composable(Routes.SIGN_UP) {}
+        composable(Routes.CLASSES) { ClassesScreen(modifier) }
+
+
+        composable(Routes.ACCEPT_STUDENTS) { AcceptStudentScreen(modifier) }
+        //@TODO: añadir la ruta de sign up
+        //composable(Routes.SIGN_UP) {}
     }
 }

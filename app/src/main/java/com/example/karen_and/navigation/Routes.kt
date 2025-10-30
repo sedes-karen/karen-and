@@ -8,4 +8,5 @@ object Routes {
     const val CLASSES_DETAILS = "classes/:id"
     const val PROFILE = "profile"
     const val CHAT = "chat"
+    const val ACCEPT_STUDENTS = "accept-students"
 }

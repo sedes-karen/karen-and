@@ -27,11 +27,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import com.example.karen_and.R
+import com.example.karen_and.models.UserRole
 import com.example.karen_and.ui.components.AppButton
 import com.example.karen_and.ui.components.AppInput
 import com.example.karen_and.ui.theme.AppTypography
@@ -42,8 +46,20 @@ fun LoginScreen(
     onNavigateHome: () -> Unit,
     onNavigateSignUp: () -> Unit,
     showSnackbar: (String) -> Unit,
-    viewModel: LoginViewModel = viewModel()
 ) {
+    val context = LocalContext.current
+
+    val tokenStore = remember {
+        val appCtx = context.applicationContext
+        val prefs = appCtx.getSharedPreferences("karen_prefs", android.content.Context.MODE_PRIVATE)
+        com.example.karen_and.data.TokenStore(prefs)
+    }
+    // ViewModel con factory
+    val viewModel: LoginViewModel = viewModel(
+        factory = LoginViewModelFactory(tokenStore)
+    )
+
+
     val state = viewModel.state.collectAsState().value
     val image = painterResource(R.drawable.logo_karen)
 
@@ -70,8 +86,9 @@ fun LoginScreen(
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .padding(top = 40.dp, bottom = 40.dp)
-                .size(300.dp)
-            )
+                .fillMaxWidth(0.6f)
+                .aspectRatio(1f)
+        )
 
         Text(
             text = stringResource(R.string.login_title),
@@ -122,8 +139,15 @@ fun LoginScreen(
 
         AppButton(
             text = stringResource(R.string.login_button_text),
-            onClick = { viewModel.submit() },
-            enabled = state.isFormValid && !state.isLoading
+            onClick = { viewModel.submit(navigateToHome = onNavigateHome) },
+            enabled = state.isFormValid,
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 5.dp)
+        )
+
+        AppButton(
+            text = "show wnackckckckckc",
+            onClick = { showSnackbar("asdasda") },
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 5.dp)
         )
 
         Spacer(modifier = Modifier.height(50.dp))
