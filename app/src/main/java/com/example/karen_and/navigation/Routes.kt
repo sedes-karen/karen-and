@@ -3,8 +3,10 @@ package com.example.karen_and.navigation
 object Routes {
     const val LOGIN = "login"
     const val SIGN_UP = "signup"
+    const val SING_UP_STEP1 = "signup/step1"
+    const val SING_UP_STEP2 = "signup/step2"
+    const val SING_UP_STEP3 = "signup/step3"
     const val SPLASH = "splash"
-    const val SIGN_UP = "sign-up"
     const val HOME = "home"
     const val CLASSES = "classes"
     const val CLASSES_DETAILS = "classes/:id"
