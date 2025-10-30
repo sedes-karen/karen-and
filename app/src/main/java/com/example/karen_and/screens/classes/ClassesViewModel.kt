@@ -1,9 +1,9 @@
-package com.example.karen_and.viewmodels
+package com.example.karen_and.screens.classes
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.karen_and.models.ClassModel
-import com.example.karen_and.services.ClassesService
+import com.example.karen_and.network.services.ClassesService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

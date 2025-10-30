@@ -1,6 +1,5 @@
 package com.example.karen_and.network
 
-import com.example.karen_and.RetrofitClient
 import retrofit2.http.Body
 import retrofit2.http.POST
 

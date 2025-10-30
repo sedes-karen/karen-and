@@ -1,6 +1,7 @@
-package com.example.karen_and.network
+package com.example.karen_and.network.services
 
-import com.example.karen_and.RetrofitClient
+import com.example.karen_and.network.RetrofitClient
+import com.example.karen_and.models.UserModel
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -16,9 +17,9 @@ interface LoginApi {
 data class LoginRequest(val email: String, val password: String)
 
 data class LoginResponse(
-    val userId: String,
-    val email: String,
-    val token: String
+    val user: UserModel,
+    val token: String,
+    val message: String,
 )
 
 object LoginService {

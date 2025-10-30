@@ -25,4 +25,6 @@
     <string name="error_message">Ocurrió un error</string>
     <string name="continue_button_text">Continuar</string>
     <string name="finish_button_text">Terminar</string>
+    <string name="register_link">Registrarse</string>
+    <string name="accept_students">Aceptar Alumnos</string>
 </resources>

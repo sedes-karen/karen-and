@@ -1,5 +1,6 @@
 package com.example.karen_and.navigation
 
+import LoginScreen
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
@@ -11,12 +12,10 @@ import androidx.navigation.compose.composable
 import com.example.karen_and.screens.chat.ChatScreen
 import com.example.karen_and.screens.classes.ClassesScreen
 import com.example.karen_and.screens.home.HomeScreen
-import com.example.karen_and.screens.login.LoginScreen
-import com.example.karen_and.screens.login.LoginViewModel
 import com.example.karen_and.screens.profile.ProfileScreen
 import com.example.karen_and.screens.signup.SignUpScreen
-import com.example.karen_and.ui.ui_events.UIEvents
-
+import com.example.karen_and.screens.splash.SplashScreen
+import com.example.karen_and.screens.teacher_screens.accept_student.AcceptStudentScreen
 @Composable
 fun AppNavGraph(
     navController: NavHostController,
@@ -25,16 +24,16 @@ fun AppNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.LOGIN,
+        startDestination = Routes.SPLASH,
         enterTransition = { EnterTransition.None },
-        popEnterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
+        popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None }
-
     ) {
+        composable(Routes.SPLASH) {
+            SplashScreen(navController)
+        }
         composable(Routes.LOGIN) {
-            val loginViewModel: LoginViewModel = viewModel()
-
             LoginScreen(
                 onNavigateHome = {
                     navController.navigate(Routes.HOME) {
@@ -50,7 +49,7 @@ fun AppNavGraph(
                         }
                     }
                 },
-                showSnackbar = showSnackbar,
+              showSnackbar = showSnackbar,
             )
         }
         composable(Routes.HOME) {
@@ -83,6 +82,8 @@ fun AppNavGraph(
                 showSnackbar = showSnackbar
             )
         }
-    }
+        composable(Routes.CLASSES) { ClassesScreen(modifier) }
+        composable(Routes.ACCEPT_STUDENTS) { AcceptStudentScreen(modifier) }
 
+    }
 }
