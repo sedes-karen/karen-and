@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.karen_and.models.UserStatusEnum
 import com.example.karen_and.ui.components.AppButton
 import com.example.karen_and.ui.theme.AppTypography
 import com.example.karen_and.ui.theme.KarenandTheme
@@ -58,13 +59,16 @@ fun AcceptStudentScreen(
                 containerColor = MaterialTheme.colorScheme.secondary,
                 shape = RoundedCornerShape(5.dp),
                 modifier = Modifier.padding(horizontal = 30.dp, vertical = 5.dp)
-            ) { }
+            ) {
+                viewModel.acceptSelectedSequential(UserStatusEnum.ENABLED)
+            }
 
             AppButton(
                 text = "Eliminar",
                 shape = RoundedCornerShape(5.dp),
                 modifier = Modifier.padding(horizontal = 30.dp, vertical = 5.dp)
-            ) { }
+            ) {
+                viewModel.acceptSelectedSequential(UserStatusEnum.DISABLED) }
         }
         if (state.isLoadingGetUsers) {
             CircularProgressIndicator()
@@ -83,7 +87,6 @@ fun AcceptStudentScreen(
                     val fullName = listOfNotNull(u.name, u.lastname.takeIf { it.isNotBlank() })
                         .joinToString(" ")
                     val selected = u.id in state.studentsSelected
-                    // si tenés fecha en tu modelo/DTO, formateala y pasala acá
                     val dateRight: String? = null
 
                     AcceptStudentItem(
@@ -107,7 +110,7 @@ fun AcceptStudentScreen(
 @Preview(showBackground = true)
 @Composable
 fun AcceptStudentScreenPreview() {
-    KarenandTheme { // o el nombre de tu theme
+    KarenandTheme {
         AcceptStudentScreen(
             modifier = Modifier
                 .fillMaxSize()
@@ -140,7 +143,6 @@ fun AcceptStudentItem(
             .padding(horizontal = 14.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Avatar cuadrado
         Box(
             modifier = Modifier
                 .size(44.dp)
@@ -148,7 +150,6 @@ fun AcceptStudentItem(
                 .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.35f)),
             contentAlignment = Alignment.Center
         ) {
-            // Cuadradito interno marca selección
             val innerAlpha = if (selected) 1f else 0f
             Box(
                 modifier = Modifier

@@ -46,7 +46,7 @@ class LoginViewModel(
 
                 result
                     .onSuccess { data ->
-                        sessionStore.saveSession(data.token, data.user.typeUser)
+                        sessionStore.saveSession(data.token, data.user)
                         navigateToHome()
                     }
                     .onFailure { error ->
