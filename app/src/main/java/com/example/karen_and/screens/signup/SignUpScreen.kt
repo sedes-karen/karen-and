@@ -57,7 +57,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 
-
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun SignUpScreen(
