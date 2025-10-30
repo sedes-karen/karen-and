@@ -1,10 +1,10 @@
 package com.example.karen_and.screens.login
 
-import android.util.Log
 import android.util.Patterns
+import android.util.Log
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.karen_and.network.LoginService
 import com.example.karen_and.ui.ui_events.UIEvents
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import com.example.karen_and.network.LoginService
+import com.example.karen_and.navigation.Routes
 
 class LoginViewModel : ViewModel() {
     private val _state = MutableStateFlow(LoginState())
@@ -78,4 +79,5 @@ class LoginViewModel : ViewModel() {
         val passOk = state.password.length >= 6
         return emailOk && passOk && !state.isLoading
     }
+
 }

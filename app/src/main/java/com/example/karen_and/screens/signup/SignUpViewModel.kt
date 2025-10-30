@@ -4,6 +4,7 @@ import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.karen_and.R
+import com.example.karen_and.navigation.Routes
 import com.example.karen_and.ui.ui_events.UIEvents
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,17 +13,34 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import com.example.karen_and.network.SignUpService
-import kotlin.text.isNotBlank
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class SignUpViewModel : ViewModel() {
     private val _state = MutableStateFlow(SignUpState())
     val state: StateFlow<SignUpState> = _state
+
     private val _events = MutableSharedFlow<UIEvents>()
     val events = _events.asSharedFlow()
 
     fun onEmailChange(newEmail: String) {
         _state.update {
             val updated = it.copy(email = newEmail)
+            updated.copy(isFormValid = validate(updated))
+        }
+    }
+
+    fun onNameChange(newName: String) {
+        _state.update {
+            val updated = it.copy(name = newName)
+            updated.copy(isFormValid = validate(updated))
+        }
+    }
+
+    fun onLastnameChange(newLastname: String) {
+        _state.update {
+            val updated = it.copy(lastname = newLastname)
             updated.copy(isFormValid = validate(updated))
         }
     }
@@ -41,37 +59,125 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
+    fun nextStep() {
+        if (_state.value.currentStep < 4) {
+            _state.value = _state.value.copy(currentStep = _state.value.currentStep + 1)
+        }
+    }
+
+    fun previousStep() {
+        if (_state.value.currentStep > 1) {
+            _state.update { it.copy(currentStep = it.currentStep - 1) }
+        }
+    }
+
     fun submit() {
         if (_state.value.isFormValid) {
             viewModelScope.launch {
+                val state = _state.value
+
+                if (!validate(state)) {
+                    _events.emit(UIEvents.ShowSnackbar("Por favor, completá todos los campos correctamente"))
+                    return@launch
+                }
+
                 _state.update { it.copy(isLoading = true) }
 
-                val result = SignUpService.signUp(_state.value.email, _state.value.password, _state.value.name, _state.value.birthday)
+                try {
+                    if (SignUpService.emailExists(state.email)) {
+                        _events.emit(UIEvents.ShowSnackbar("Email en uso"))
+                        _state.update { it.copy(isLoading = false) }
+                        return@launch
+                    }
 
-                result
-                    .onSuccess {
-                        _events.emit(UIEvents.ShowSnackbar(R.string.success_message_login.toString()))
-                    }
-                    .onFailure { error ->
-                        _events.emit(UIEvents.ShowSnackbar(error.message ?: R.string.error_message.toString()))
-                    }
+                    val result = SignUpService.signUp(
+                        _state.value.name,
+                        _state.value.lastname,
+                        _state.value.birthday,
+                        _state.value.email,
+                        _state.value.password
+                    )
+
+                    result
+                        .onSuccess {
+                            _events.emit(UIEvents.ShowSnackbar("Usuario registrado correctamente"))
+                            _events.emit(UIEvents.Navigate(Routes.HOME))
+                        }
+                        .onFailure { error ->
+                            val msg = when {
+                                error.message?.contains(
+                                    "email",
+                                    ignoreCase = true
+                                ) == true -> "Email en uso"
+
+                                else -> "Error al registrar usuario"
+                            }
+                            _events.emit(UIEvents.ShowSnackbar(msg))
+                        }
+
+                } catch (e: Exception) {
+                    _events.emit(UIEvents.ShowSnackbar("Error inesperado: ${e.message}"))
+                }
 
                 _state.update { it.copy(isLoading = false) }
-            }
-        } else {
-            viewModelScope.launch {
-                _events.emit(UIEvents.ShowSnackbar("Email o contraseña incorrectas. Por favor, revisar los campos"))
             }
         }
     }
 
-    private fun validate(state: SignUpState): Boolean {
-        val emailOk = Patterns.EMAIL_ADDRESS.matcher(state.email).matches()
-        val passOk = state.password.length >= 6
-        val birthdayOk = state.birthday.isNotBlank()
-        val nameOk = state.birthday.isNotBlank()
+    fun isValidBirthday(dateStr: String): Boolean {
+        return try {
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            dateFormat.isLenient = false // fuerza formato estricto (no 32/13/2020)
 
-        return emailOk && passOk && birthdayOk && nameOk && !state.isLoading
+            val parsedDate = dateFormat.parse(dateStr)
+            val today = Calendar.getInstance().time
+
+            parsedDate != null && parsedDate.before(today)
+        } catch (e: Exception) {
+            false
+        }
     }
 
+
+    private fun validate(state: SignUpState): Boolean {
+        return when (state.currentStep) {
+            1 -> {
+                val validName = state.name.isNotBlank()
+                val validLastname = state.lastname.isNotBlank()
+                _state.update {
+                    it.copy(
+                        nameError = if (!validName) "El nombre es obligatorio" else null,
+                        lastnameError = if (!validLastname) "El apellido es obligatorio" else null
+                    )
+                }
+                validName && validLastname
+            }
+
+            2 -> {
+                val validBirthday = isValidBirthday(state.birthday)
+                _state.update {
+                    it.copy(birthdayError = if (!validBirthday) "Fecha inválida" else null)
+                }
+                validBirthday
+            }
+
+            3 -> {
+                val validEmail = Patterns.EMAIL_ADDRESS.matcher(state.email).matches()
+                _state.update {
+                    it.copy(emailError = if (!validEmail) "Email inválido" else null)
+                }
+                validEmail
+            }
+
+            4 -> {
+                val validPassword = state.password.length >= 6
+                _state.update {
+                    it.copy(passwordError = if (!validPassword) "La contraseña debe tener al menos 6 caracteres" else null)
+                }
+                validPassword
+            }
+
+            else -> false
+        }
+     }
 }

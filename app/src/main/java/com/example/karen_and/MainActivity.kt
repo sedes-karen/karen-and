@@ -27,7 +27,6 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             val snackbarHostState = remember { SnackbarHostState() }
             val scope = rememberCoroutineScope()
-
             val backStackEntry = navController.currentBackStackEntryAsState().value
             val currentRoute = backStackEntry?.destination?.route
 

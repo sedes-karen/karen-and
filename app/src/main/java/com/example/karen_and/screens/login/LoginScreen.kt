@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import com.example.karen_and.R
+import com.example.karen_and.navigation.Routes
 import com.example.karen_and.ui.components.AppButton
 import com.example.karen_and.ui.components.AppInput
 import com.example.karen_and.ui.theme.AppTypography
@@ -51,11 +52,20 @@ fun LoginScreen(
         viewModel.events.collect { event ->
             when (event) {
                 is UIEvents.ShowSnackbar -> showSnackbar(event.message)
-                is UIEvents.Navigate -> onNavigateHome()
+                is UIEvents.Navigate -> {
+                    when (event.route) {
+                        Routes.HOME -> onNavigateHome()
+                        Routes.SIGN_UP -> onNavigateSignUp()
+                        else -> {}
+                    }
+                }
                 else -> {}
             }
         }
     }
+
+
+
 
     Column (
         modifier = Modifier
@@ -177,11 +187,12 @@ fun LoginScreen(
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
-                text = stringResource(R.string.register_link),
+                text = stringResource(R.string.register_title),
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.clickable { onNavigateSignUp() }
             )
+
         }
     }
 }

@@ -9,19 +9,25 @@ interface SignUpApi {
     suspend fun signUp(@Body body: SingUpRequest): SignUpResponse
 }
 
-data class SingUpRequest(val email: String, val password: String, val name: String, val birthday: String)
+data class SingUpRequest(val email: String, val password: String, val name: String, val lastname: String, val birthday: String)
 
 data class SignUpResponse(
     val userId: String,
     val email: String,
     val name: String,
+    val lastname: String,
     val birthday: String,
     val token: String
 )
 
 object SignUpService {
     private val api: SignUpApi = RetrofitClient.create(SignUpApi::class.java)
+    private val registeredEmails = mutableSetOf("test@gmail.com")
 
-    suspend fun signUp(email: String, password: String, name: String, birthday: String): Result<SignUpResponse> =
-        runCatching { api.signUp(SingUpRequest(email, password, name, birthday)) }
+    fun emailExists(email: String): Boolean {
+        return registeredEmails.contains(email)
+    }
+
+    suspend fun signUp(email: String, password: String, name: String, lastname: String, birthday: String): Result<SignUpResponse> =
+        runCatching { api.signUp(SingUpRequest(email, password, name, lastname, birthday)) }
 }
