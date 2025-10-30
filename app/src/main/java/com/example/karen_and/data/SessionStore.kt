@@ -1,4 +1,3 @@
-// data/TokenStore.kt
 package com.example.karen_and.data
 
 import android.content.SharedPreferences

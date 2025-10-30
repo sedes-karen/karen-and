@@ -1,4 +1,3 @@
-// screens/splash/SplashScreen.kt
 package com.example.karen_and.screens.splash
 
 import android.content.Context
@@ -31,7 +30,6 @@ fun SplashScreen(navController: NavController) {
         val sessionStore = SessionStore(prefs)
         val token = sessionStore.getToken()
 
-        // (opcional) agregá un pequeño delay si querés ver un logo:
         delay(1000)
 
         if (token.isNullOrBlank()) {

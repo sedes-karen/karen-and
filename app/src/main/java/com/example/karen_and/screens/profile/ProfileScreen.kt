@@ -9,17 +9,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import com.example.karen_and.R
 
 @Composable
 fun ProfileScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    val sharedPref = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
 
     val sessionStore = remember {
         val appCtx = context.applicationContext
-        val prefs = appCtx.getSharedPreferences("karen_prefs", android.content.Context.MODE_PRIVATE)
+        val prefs = appCtx.getSharedPreferences("karen_prefs", Context.MODE_PRIVATE)
         com.example.karen_and.data.SessionStore(prefs)
     }
 

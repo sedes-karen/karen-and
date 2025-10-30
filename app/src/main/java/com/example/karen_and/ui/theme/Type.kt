@@ -17,7 +17,6 @@ val montserratFamily = FontFamily(
     Font(R.font.montserrat_bold, FontWeight.Bold)
 )
 
-// Set of Material typography styles to start with
 val AppTypography = Typography(
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
