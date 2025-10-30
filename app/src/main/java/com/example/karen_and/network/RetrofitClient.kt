@@ -6,7 +6,6 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-// network/RetrofitClient.kt
 object RetrofitClient {
     private const val BASE_URL = BuildConfig.API_URL
     private lateinit var retrofit: Retrofit

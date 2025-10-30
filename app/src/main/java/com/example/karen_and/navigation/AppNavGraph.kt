@@ -71,8 +71,6 @@ fun AppNavGraph(
 
 
         composable(Routes.ACCEPT_STUDENTS) { AcceptStudentScreen(modifier) }
-        //@TODO: añadir la ruta de sign up
-        //composable(Routes.SIGN_UP) {}
         composable(Routes.SIGN_UP) {}
 
     }

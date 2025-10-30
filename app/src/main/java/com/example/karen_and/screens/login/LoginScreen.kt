@@ -29,7 +29,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.remember
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -55,7 +54,6 @@ fun LoginScreen(
         val prefs = appCtx.getSharedPreferences("karen_prefs", android.content.Context.MODE_PRIVATE)
         com.example.karen_and.data.SessionStore(prefs)
     }
-    // ViewModel con factory
     val viewModel: LoginViewModel = viewModel(
         factory = LoginViewModelFactory(sessionStore)
     )

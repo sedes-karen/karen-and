@@ -28,10 +28,8 @@ fun AppDrawerContent(
     sessionStore: SessionStore
 
 ) {
-    val context = androidx.compose.ui.platform.LocalContext.current
-    // evitar recrear prefs en recomposiciones
     val role = remember {
-        sessionStore.getUserType() // o null si no hay login
+        sessionStore.getUserType()
     }
 
     val baseItems = listOf(

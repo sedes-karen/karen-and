@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 enum class UserStatusEnum {
     @SerializedName("created") CREATED,
     @SerializedName("enabled") ENABLED,
-    @SerializedName("suspended") SUSPENDED
+    @SerializedName("disabled") DISABLED
 }
 
 enum class UserType {
@@ -29,5 +29,5 @@ data class UserModel(
 
 
 data class UserStatus(
-    val name: UserStatusEnum               // 👈 enum mapeado por nombre
+    val name: UserStatusEnum
 )
