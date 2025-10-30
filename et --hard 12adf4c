@@ -1,0 +1,34 @@
+[33mc962be0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32msignup[m[33m)[m HEAD@{0}: checkout: moving from dev to signup
+[33me69df89[m[33m ([m[1;31morigin/dev[m[33m, [m[1;32mdev[m[33m)[m HEAD@{1}: pull: Fast-forward
+[33ma228bb6[m HEAD@{2}: checkout: moving from signup to dev
+[33mc962be0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32msignup[m[33m)[m HEAD@{3}: rebase (finish): returning to refs/heads/signup
+[33mc962be0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32msignup[m[33m)[m HEAD@{4}: rebase (pick): Registro de usuarios
+[33m12adf4c[m HEAD@{5}: commit: Registro de usuarios
+[33m077381c[m HEAD@{6}: rebase (pick): Pantallas de login y de registro
+[33m20524d7[m HEAD@{7}: rebase (pick): Pantallas de login y de registro
+[33ma228bb6[m HEAD@{8}: rebase (start): checkout origin/dev
+[33mc3a9038[m HEAD@{9}: commit: Registro de usuarios
+[33m2732328[m HEAD@{10}: commit (merge): Registro de usuario
+[33me9bf94b[m HEAD@{11}: checkout: moving from dev to signup
+[33ma228bb6[m HEAD@{12}: checkout: moving from signup to dev
+[33me9bf94b[m HEAD@{13}: commit: Registro de usuario
+[33maec2121[m[33m ([m[1;31morigin/login[m[33m, [m[1;32mmain[m[33m, [m[1;32mlogin[m[33m)[m HEAD@{14}: checkout: moving from main to signup
+[33maec2121[m[33m ([m[1;31morigin/login[m[33m, [m[1;32mmain[m[33m, [m[1;32mlogin[m[33m)[m HEAD@{15}: checkout: moving from register to main
+[33maec2121[m[33m ([m[1;31morigin/login[m[33m, [m[1;32mmain[m[33m, [m[1;32mlogin[m[33m)[m HEAD@{16}: checkout: moving from login to register
+[33maec2121[m[33m ([m[1;31morigin/login[m[33m, [m[1;32mmain[m[33m, [m[1;32mlogin[m[33m)[m HEAD@{17}: checkout: moving from main to login
+[33maec2121[m[33m ([m[1;31morigin/login[m[33m, [m[1;32mmain[m[33m, [m[1;32mlogin[m[33m)[m HEAD@{18}: merge login: Fast-forward
+[33m2430d6a[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{19}: checkout: moving from login to main
+[33maec2121[m[33m ([m[1;31morigin/login[m[33m, [m[1;32mmain[m[33m, [m[1;32mlogin[m[33m)[m HEAD@{20}: commit: Pantallas de login y de registro
+[33mb7a697e[m HEAD@{21}: commit: Pantallas de login y de registro
+[33m98a572c[m HEAD@{22}: merge main: Merge made by the 'ort' strategy.
+[33m7ab6957[m HEAD@{23}: commit: Inicio de Sesión
+[33m2978669[m HEAD@{24}: commit (merge): Merge remote-tracking branch 'origin/dev' into login
+[33mc72656e[m HEAD@{25}: commit: Página de inicio de sesión
+[33mcca87a9[m HEAD@{26}: checkout: moving from main to login
+[33m2430d6a[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{27}: reset: moving to origin/main
+[33m6262336[m HEAD@{28}: pull --no-stat -v --progress origin main: Merge made by the 'ort' strategy.
+[33m92a877a[m HEAD@{29}: commit: Guardando cambios hechos en main antes de moverlos a una nueva rama
+[33mcca87a9[m HEAD@{30}: checkout: moving from login to main
+[33mcca87a9[m HEAD@{31}: checkout: moving from main to login
+[33mcca87a9[m HEAD@{32}: commit: Página de inicio de sesión
+[33m6acdabb[m HEAD@{33}: clone: from https://github.com/sedes-karen/karen-and.git

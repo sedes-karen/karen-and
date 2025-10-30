@@ -63,10 +63,6 @@ fun LoginScreen(
             }
         }
     }
-
-
-
-
     Column (
         modifier = Modifier
             .fillMaxWidth()
@@ -91,7 +87,7 @@ fun LoginScreen(
             modifier = Modifier.padding(top = 10.dp, bottom = 20.dp)
         )
 
-        Spacer(modifier = Modifier.height(15.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             text = stringResource(R.string.email_label),
@@ -110,7 +106,7 @@ fun LoginScreen(
             hasBorder = false
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         Text(
             text = stringResource(R.string.password_label),
@@ -137,7 +133,7 @@ fun LoginScreen(
             enabled = state.isFormValid && !state.isLoading
         )
 
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(40.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),

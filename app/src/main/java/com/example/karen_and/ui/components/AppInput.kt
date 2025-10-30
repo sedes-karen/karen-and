@@ -24,7 +24,8 @@ fun AppInput(
     contentColor: Color = Color.Gray,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    hasBorder: Boolean = true
+    hasBorder: Boolean = true,
+    trailingIcon: @Composable (() -> Unit)? = null
 ) {
 
     val indicatorColor = if (hasBorder) {
@@ -56,6 +57,6 @@ fun AppInput(
                 disabledContainerColor = Color.Gray,
                 disabledTextColor = Color.White,
             ),
-
+            trailingIcon = trailingIcon,
         )
     }
