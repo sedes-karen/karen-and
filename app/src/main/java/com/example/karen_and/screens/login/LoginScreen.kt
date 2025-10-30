@@ -144,12 +144,6 @@ fun LoginScreen(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 5.dp)
         )
 
-        AppButton(
-            text = "show wnackckckckckc",
-            onClick = { showSnackbar("asdasda") },
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 5.dp)
-        )
-
         Spacer(modifier = Modifier.height(50.dp))
 
         Row(
