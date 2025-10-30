@@ -9,15 +9,18 @@ interface SignUpApi {
     suspend fun signUp(@Body body: SingUpRequest): SignUpResponse
 }
 
-data class SingUpRequest(val email: String, val password: String, val name: String, val lastname: String, val birthday: String)
+data class SingUpRequest(
+    val name: String,
+    val lastname: String,
+    val email: String,
+    val password: String
+)
 
 data class SignUpResponse(
     val userId: String,
     val email: String,
     val name: String,
-    val lastname: String,
-    val birthday: String,
-    val token: String
+    val lastname: String
 )
 
 object SignUpService {
@@ -28,6 +31,6 @@ object SignUpService {
         return registeredEmails.contains(email)
     }
 
-    suspend fun signUp(email: String, password: String, name: String, lastname: String, birthday: String): Result<SignUpResponse> =
-        runCatching { api.signUp(SingUpRequest(email, password, name, lastname, birthday)) }
+    suspend fun signUp(name: String, lastname: String, email: String, password: String): Result<SignUpResponse> =
+        runCatching { api.signUp(SingUpRequest(name, lastname, email, password)) }
 }

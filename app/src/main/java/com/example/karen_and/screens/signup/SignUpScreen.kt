@@ -48,11 +48,14 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.*
-import java.text.SimpleDateFormat
 import java.util.*
 import android.app.DatePickerDialog
 import android.widget.DatePicker
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -95,7 +98,7 @@ fun SignUpScreen(
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier
-                    .padding(top = 40.dp, bottom = 40.dp)
+                    .padding(top = 20.dp, bottom = 40.dp)
                     .size(300.dp)
             )
 
@@ -106,7 +109,7 @@ fun SignUpScreen(
                 modifier = Modifier.padding(top = 10.dp, bottom = 20.dp)
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(5.dp))
 
             StepIndicator(currentStep = state.currentStep)
 
@@ -125,8 +128,29 @@ fun SignUpScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(25.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
+            if (state.isLoading) {
+                CircularProgressIndicator()
+            } else {
+                AppButton(
+                    text = if (state.currentStep == 4) {
+                        stringResource(R.string.finish_button_text)
+                    } else {
+                        stringResource(R.string.continue_button_text)
+                    },
+                    onClick = {
+                        if (state.currentStep == 4) {
+                            viewModel.submit()
+                        } else {
+                            viewModel.nextStep()
+                        }
+                    },
+                    enabled = state.isFormValid && !state.isLoading ) }
+
+            Spacer(modifier = Modifier.weight(1f))
+
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
@@ -181,7 +205,7 @@ fun SignUpScreen(
                     modifier = Modifier.clickable { onNavigateLogin() }
                 )
             }
-        }
+        }}
     }
 
 @Preview
@@ -208,7 +232,7 @@ fun StepIndicator(
         verticalAlignment = Alignment.CenterVertically
     ) {
         for (i in 1..totalSteps) {
-            val isActive = i <= currentStep
+            val isActive = i < currentStep
 
             val circleColor by animateColorAsState(
                 targetValue = if (isActive) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
@@ -274,7 +298,12 @@ fun StepOne(state: SignUpState, viewModel: SignUpViewModel) {
                 modifier = Modifier.padding(start = 4.dp, top = 2.dp)
             )
         }
-        Spacer(Modifier.height(16.dp))
+    }
+}
+
+@Composable
+fun StepTwo(state: SignUpState, viewModel: SignUpViewModel) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             text = stringResource(R.string.lastname_label),
             style = AppTypography.bodyLarge,
@@ -286,7 +315,8 @@ fun StepOne(state: SignUpState, viewModel: SignUpViewModel) {
 
         AppInput(
             value = state.lastname,
-            onValueChange = { viewModel.onLastnameChange(it) },
+            onValueChange = {
+                viewModel.onLastnameChange(it) },
             hasBorder = false
         )
 
@@ -296,65 +326,6 @@ fun StepOne(state: SignUpState, viewModel: SignUpViewModel) {
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(start = 4.dp, top = 2.dp)
-            )
-        }
-        Spacer(Modifier.height(24.dp))
-
-        Row {
-            AppButton(
-                text = stringResource(R.string.continue_button_text),
-                onClick = { viewModel.nextStep() },
-                enabled = state.isFormValid && !state.isLoading
-            )
-        }
-    }
-}
-
-@Composable
-fun StepTwo(state: SignUpState, viewModel: SignUpViewModel) {
-    val context = LocalContext.current
-    val calendar = Calendar.getInstance()
-
-    var selectedDate by remember { mutableStateOf("") }
-
-    val datePickerDialog = DatePickerDialog(
-        context,
-        { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-            selectedDate = "$dayOfMonth/${month + 1}/$year"
-            viewModel.onBirthdayChange(selectedDate)
-        },
-        calendar.get(Calendar.YEAR),
-        calendar.get(Calendar.MONTH),
-        calendar.get(Calendar.DAY_OF_MONTH)
-    )
-
-    datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
-
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-
-        Text(text = "Fecha seleccionada: $selectedDate")
-        AppButton(
-            text = stringResource(R.string.date_label),
-            onClick = { datePickerDialog.show() },
-            enabled = state.isFormValid && !state.isLoading
-        )
-
-        if (state.birthdayError != null) {
-            Text(
-                text = state.birthdayError,
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(start = 4.dp, top = 2.dp)
-            )
-        }
-
-        Spacer(Modifier.height(24.dp))
-
-        Row(horizontalArrangement = Arrangement.Center) {
-            AppButton(
-                text = stringResource(R.string.continue_button_text),
-                onClick = { viewModel.nextStep() },
-                enabled = state.isFormValid && !state.isLoading
             )
         }
     }
@@ -386,16 +357,6 @@ fun StepThree(state: SignUpState, viewModel: SignUpViewModel) {
                 modifier = Modifier.padding(start = 4.dp, top = 2.dp)
             )
         }
-
-        Spacer(Modifier.height(24.dp))
-
-        Row {
-            AppButton(
-                text = stringResource(R.string.continue_button_text),
-                onClick = { viewModel.nextStep() },
-                enabled = state.isFormValid && !state.isLoading
-            )
-        }
     }
 }
 
@@ -413,6 +374,9 @@ fun StepFour(state: SignUpState, viewModel: SignUpViewModel, onNavigateHome: () 
         }
     }
 
+    var passwordVisible by remember { mutableStateOf(false) }
+    var confirmVisible by remember { mutableStateOf(false) }
+
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             text = stringResource(R.string.password_label),
@@ -426,7 +390,9 @@ fun StepFour(state: SignUpState, viewModel: SignUpViewModel, onNavigateHome: () 
         AppInput(
             value = state.password,
             onValueChange = { viewModel.onPasswordChange(it) },
-            hasBorder = false
+            hasBorder = false,
+            visualTransformation = PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
         )
 
         if (state.passwordError != null) {
@@ -438,13 +404,82 @@ fun StepFour(state: SignUpState, viewModel: SignUpViewModel, onNavigateHome: () 
             )
         }
 
-        Spacer(Modifier.height(24.dp))
-        Row {
-            AppButton(
-                text = stringResource(R.string.finish_button_text),
-                onClick = { viewModel.submit() },
-                enabled = state.isFormValid && !state.isLoading
+        Spacer(Modifier.height(10.dp))
+
+        Text(
+            text = stringResource(R.string.password_confirm),
+            style = AppTypography.bodyLarge,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 10.dp)
+                .padding(horizontal = 16.dp)
+        )
+
+        AppInput(
+            value = state.confirmPassword,
+            onValueChange = { viewModel.onConfirmPasswordChange(it) },
+            hasBorder = false,
+            visualTransformation = PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+        )
+
+        if (state.confirmPasswordError != null) {
+            Text(
+                text = state.confirmPasswordError,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(start = 4.dp, top = 2.dp)
             )
         }
     }
 }
+
+// Fecha de cumpleaños
+//fun StepTwo(state: SignUpState, viewModel: SignUpViewModel) {
+//    val context = LocalContext.current
+//    val calendar = Calendar.getInstance()
+//
+//    var selectedDate by remember { mutableStateOf("") }
+//
+//    val datePickerDialog = DatePickerDialog(
+//        context,
+//        { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+//            selectedDate = "$dayOfMonth/${month + 1}/$year"
+//            viewModel.onBirthdayChange(selectedDate)
+//        },
+//        calendar.get(Calendar.YEAR),
+//        calendar.get(Calendar.MONTH),
+//        calendar.get(Calendar.DAY_OF_MONTH)
+//    )
+//
+//    datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+//
+//    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+//
+//        Text(text = "Fecha seleccionada: $selectedDate")
+//        AppButton(
+//            text = stringResource(R.string.date_label),
+//            onClick = { datePickerDialog.show() },
+//            enabled = state.isFormValid && !state.isLoading
+//        )
+//
+//        if (state.birthdayError != null) {
+//            Text(
+//                text = state.birthdayError,
+//                color = MaterialTheme.colorScheme.error,
+//                style = MaterialTheme.typography.bodySmall,
+//                modifier = Modifier.padding(start = 4.dp, top = 2.dp)
+//            )
+//        }
+//
+//        Spacer(Modifier.height(24.dp))
+//
+//        Row(horizontalArrangement = Arrangement.Center) {
+//            AppButton(
+//                text = stringResource(R.string.continue_button_text),
+//                onClick = { viewModel.nextStep() },
+//                enabled = state.isFormValid && !state.isLoading
+//            )
+//        }
+//    }
+//}
