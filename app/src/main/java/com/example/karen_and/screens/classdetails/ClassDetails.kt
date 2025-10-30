@@ -2,63 +2,67 @@ package com.example.karen_and.screens.classdetails
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Text
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Chat
-import androidx.compose.material3.Icon
-import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Chat
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.vector.PathParser
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
-import com.example.karen_and.R
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.foundation.lazy.items
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import androidx.lifecycle.ViewModel
-
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.karen_and.R
+import com.example.karen_and.models.Content
+import com.example.karen_and.models.Lesson
+import com.example.karen_and.models.LessonStatus
+import com.example.karen_and.models.Subject
+import com.example.karen_and.ui.theme.ResponsiveText
 
 @Composable
 fun tamanoActual():Dp{
@@ -71,114 +75,88 @@ val montserrat = FontFamily(
     Font(R.font.montserrat_bold, FontWeight.Bold)
 )
 
-data class Subject(
-    val id: Int,
-    val name: String,
-    val userId: Int,
-    val classes: List<Clase>
-)
-
-data class Clase(
-    val id: Int,
-    val subjectId: Int,
-    val date: String,
-    val status: ClassStatus,
-    val contents: List<Content>
-)
-
-data class ClassStatus(
-    val id: Int,
-    val name: String
-)
-
-data class Content(
-    val id: Int,
-    val classId: Int,
-    val content: String
-)
-
 val materia = Subject(
     id = 1,
     name = "Programación III",
     userId = 12,
-    classes = listOf(
-        Clase(
+    lessons = listOf(
+        Lesson(
             id = 104,
             subjectId = 1,
             date = "30/10/2025",
-            status = ClassStatus(1, "Creado"),
+            status = LessonStatus(1, "Creado"),
             contents = listOf(
                 Content(1, 101, "Entorno de desarrollo y herramientas avanzadas: configuración del IDE, depuración de código y gestión de dependencias en proyectos de gran escala. Se abordan estrategias de optimización del flujo de trabajo y control de versiones colaborativo.")
             )
         ),
-        Clase(
+        Lesson(
             id = 103,
             subjectId = 1,
             date = "23/10/2025",
-            status = ClassStatus(1, "Creado"),
+            status = LessonStatus(1, "Creado"),
             contents = listOf(
                 Content(2, 102, "Operadores básicos y expresiones complejas: uso combinado de operadores lógicos, aritméticos y relacionales en estructuras condicionales. Ejemplos prácticos de evaluación de expresiones compuestas y errores comunes al anidar condiciones.")
             )
         ),
-        Clase(
+        Lesson(
             id = 102,
             subjectId = 1,
             date = "16/10/2025",
-            status = ClassStatus(1, "Creado"),
+            status = LessonStatus(1, "Creado"),
             contents = listOf(
                 Content(3, 103, "Condicionales y bucles: estructuras de control avanzadas, iteración con rangos, colecciones y flujos de datos. Se analiza cómo optimizar los ciclos y aplicar patrones de diseño para mejorar la eficiencia del código.")
             )
         ),
-        Clase(
+        Lesson(
             id = 101,
             subjectId = 1,
             date = "15/10/2025",
-            status = ClassStatus(1, "Creado"),
+            status = LessonStatus(1, "Creado"),
             contents = listOf(
                 Content(4, 104, "Funciones: definición, parámetros, retorno de valores, sobrecarga y modularización del código. Se enfatiza la reutilización de funciones y la separación lógica del programa para mantener escalabilidad y legibilidad.")
             )
         ),
-        Clase(
+        Lesson(
             id = 100,
             subjectId = 1,
             date = "8/10/2025",
-            status = ClassStatus(1, "Creado"),
+            status = LessonStatus(1, "Creado"),
             contents = listOf(
                 Content(5, 105, "Introducción a la programación estructurada: análisis del flujo de ejecución, variables, tipos de datos y operadores. Se presentan buenas prácticas iniciales para el desarrollo limpio y organizado en proyectos pequeños.")
             )
         ),
-        Clase(
+        Lesson(
             id = 99,
             subjectId = 1,
             date = "2/10/2025",
-            status = ClassStatus(1, "Creado"),
+            status = LessonStatus(1, "Creado"),
             contents = listOf(
                 Content(6, 106, "Conceptos fundamentales del pensamiento algorítmico: definición de algoritmos, pseudocódigo y diagramas de flujo. Ejercicios orientados a la resolución lógica y sistemática de problemas computacionales.")
             )
         ),
-        Clase(
+        Lesson(
             id = 98,
             subjectId = 1,
             date = "25/09/2025",
-            status = ClassStatus(1, "Creado"),
+            status = LessonStatus(1, "Creado"),
             contents = listOf(
                 Content(7, 107, "Estructura básica de un programa y sintaxis del lenguaje: reglas de declaración, comentarios, y estilo de código. Enfatiza la importancia de la legibilidad y consistencia en equipos de trabajo colaborativos.")
             )
         ),
-        Clase(
+        Lesson(
             id = 97,
             subjectId = 1,
             date = "18/09/2025",
-            status = ClassStatus(1, "Creado"),
+            status = LessonStatus(1, "Creado"),
             contents = listOf(
                 Content(8, 108, "Instalación del entorno de trabajo y primeros pasos en la codificación. Configuración de dependencias, exploración de la consola y creación del primer proyecto funcional paso a paso.")
             )
         ),
-        Clase(
+        Lesson(
             id = 96,
             subjectId = 1,
             date = "11/09/2025",
-            status = ClassStatus(1, "Creado"),
+            status = LessonStatus(1, "Creado"),
             contents = listOf(
                 Content(9, 109, "Presentación del curso: introducción a los objetivos, metodología y herramientas a utilizar. Explicación del cronograma de contenidos, dinámica de evaluación y expectativas de participación.")
             )
@@ -188,49 +166,8 @@ val materia = Subject(
     )
 )
 
-
-
-object ResponsiveText {
-    @Composable
-    fun h5() = (LocalConfiguration.current.screenWidthDp * 0.045).sp
-
-    @Composable
-    fun h4() = (LocalConfiguration.current.screenWidthDp * 0.05).sp
-
-    @Composable
-    fun h3() = (LocalConfiguration.current.screenWidthDp * 0.06).sp
-
-    @Composable
-    fun h2() = (LocalConfiguration.current.screenWidthDp * 0.07).sp
-
-    @Composable
-    fun h1() = (LocalConfiguration.current.screenWidthDp * 0.08).sp
-
-}
-
-class DetailsViewModel : ViewModel() {
-    var showDialog by mutableStateOf(false)
-        private set
-
-    var selectedClass by mutableStateOf<Clase?>(null)
-        private set
-
-    fun openDialog(clase: Clase) {
-        selectedClass = clase
-        showDialog = true
-    }
-
-    fun closeDialog() {
-        showDialog = false
-        selectedClass = null
-    }
-}
-
-
-
-
 @Composable
-fun ClassDetails( //////////FUNCIÓN PRINCIPAL DE TODA LA PAGINA ------------------------------------
+fun LessonDetails( //////////FUNCIÓN PRINCIPAL DE TODA LA PAGINA ------------------------------------
     onNavigateHome: () -> Unit,
     showSnackbar: (String) -> Unit,
     viewModel: DetailsViewModel = viewModel()
@@ -245,7 +182,7 @@ fun ClassDetails( //////////FUNCIÓN PRINCIPAL DE TODA LA PAGINA ---------------
             }
         }
     }
-    */// necesitaba el loginViewModel
+    */
 
 
     Column (/// TODA LA PANTALLA ------------------------------------------------------
@@ -394,7 +331,7 @@ fun ContentList(viewModel: DetailsViewModel = viewModel()) {
         LazyColumn(
             modifier = Modifier.padding(horizontal = tamanoActual() * 0.03f),
         ) {
-            items(materia.classes) { clase ->
+            items(materia.lessons) { clase ->
                 AddContent(clase, viewModel)
             }
         }
@@ -402,7 +339,7 @@ fun ContentList(viewModel: DetailsViewModel = viewModel()) {
 }
 
 @Composable
-fun AddContent(clase: Clase, viewModel: DetailsViewModel) {
+fun AddContent(clase: Lesson, viewModel: DetailsViewModel) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -563,8 +500,8 @@ fun Barra_con_curva(modifier: Modifier = Modifier, fillColor: Color = Color.Gray
     backgroundColor = 0xDFFFFFFF
 )
 @Composable
-fun ClassDetailsPreview() {
-    ClassDetails(
+fun LessonDetailsPreview() {
+    LessonDetails(
         onNavigateHome = {},
         showSnackbar = {},
     )

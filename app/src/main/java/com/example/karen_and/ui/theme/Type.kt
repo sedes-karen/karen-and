@@ -1,6 +1,8 @@
 package com.example.karen_and.ui.theme
 
 import androidx.compose.material3.Typography
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -50,3 +52,20 @@ val AppTypography = Typography(
     )
     */
 )
+object ResponsiveText {
+    @Composable
+    fun h5() = (LocalConfiguration.current.screenWidthDp * 0.045).sp
+
+    @Composable
+    fun h4() = (LocalConfiguration.current.screenWidthDp * 0.05).sp
+
+    @Composable
+    fun h3() = (LocalConfiguration.current.screenWidthDp * 0.06).sp
+
+    @Composable
+    fun h2() = (LocalConfiguration.current.screenWidthDp * 0.07).sp
+
+    @Composable
+    fun h1() = (LocalConfiguration.current.screenWidthDp * 0.08).sp
+
+}
