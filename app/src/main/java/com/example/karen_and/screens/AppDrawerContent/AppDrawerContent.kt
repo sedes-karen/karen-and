@@ -75,7 +75,7 @@ fun AppDrawerContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text("Buscar materia", color = chipTextColor, fontSize = 14.sp)
+        Text("Buscar clase", color = chipTextColor, fontSize = 14.sp)
         Spacer(modifier = Modifier.height(8.dp))
 
         ExposedDropdownMenuBox(

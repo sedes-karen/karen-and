@@ -1,4 +1,4 @@
-package com.example.karen_and.services
+package com.example.karen_and.network.services
 
 import com.example.karen_and.models.ClassModel
 

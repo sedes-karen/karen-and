@@ -31,6 +31,11 @@ val AppTypography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
     ),
+    titleMedium = TextStyle(
+        fontFamily = montserratFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp,
+    ),
     //TODO: añadir mas tipografias
 
     /* Other default text styles to override

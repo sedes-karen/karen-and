@@ -12,9 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.karen_and.models.ClassModel
-import com.example.karen_and.services.ClassesService
+import com.example.karen_and.network.services.ClassesService
 import com.example.karen_and.ui.components.ClassListItem
-import com.example.karen_and.viewmodels.ClassesViewModel
+import com.example.karen_and.screens.classes.ClassesViewModel
 
 @Composable
 fun ClassesScreen(modifier: Modifier) {
@@ -26,7 +26,7 @@ fun ClassesScreen(modifier: Modifier) {
     val classes by viewModel.classes.collectAsState()
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {

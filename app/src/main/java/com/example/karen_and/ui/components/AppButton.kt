@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -23,12 +24,13 @@ fun AppButton(
     containerColor: Color = MaterialTheme.colorScheme.primary,
     contentColor: Color = Color.White,
     border: BorderStroke? = null,
+    shape: Shape = RoundedCornerShape(30.dp),
     onClick: () -> Unit,
 ) {
     Button(
         onClick = onClick,
         enabled = enabled && !loading,
-        shape = RoundedCornerShape(30.dp),
+        shape = shape,
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,
             contentColor = contentColor,
@@ -37,7 +39,6 @@ fun AppButton(
         ),
         border = border,
         modifier = modifier
-            .fillMaxWidth()
             .padding(horizontal = 10.dp, vertical = 5.dp)
     ) {
         if (loading) {

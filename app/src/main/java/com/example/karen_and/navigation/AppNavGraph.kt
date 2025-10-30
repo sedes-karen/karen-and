@@ -1,5 +1,6 @@
 package com.example.karen_and.navigation
 
+import LoginScreen
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
@@ -10,8 +11,9 @@ import androidx.navigation.compose.composable
 import com.example.karen_and.screens.chat.ChatScreen
 import com.example.karen_and.screens.classes.ClassesScreen
 import com.example.karen_and.screens.home.HomeScreen
-import com.example.karen_and.screens.login.LoginScreen
 import com.example.karen_and.screens.profile.ProfileScreen
+import com.example.karen_and.screens.splash.SplashScreen
+import com.example.karen_and.screens.teacher_screens.accept_student.AcceptStudentScreen
 
 @Composable
 fun AppNavGraph(
@@ -21,12 +23,17 @@ fun AppNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.LOGIN,
+        startDestination = Routes.SPLASH,
         enterTransition = { EnterTransition.None },
-        popEnterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
+        popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None }
+
+
     ) {
+        composable(Routes.SPLASH) {
+            SplashScreen(navController)
+        }
         composable(Routes.LOGIN) {
             LoginScreen(
                 onNavigateHome = {
@@ -43,7 +50,7 @@ fun AppNavGraph(
                         }
                     }
                 },
-                showSnackbar = showSnackbar,
+              showSnackbar = showSnackbar,
             )
         }
         composable(Routes.HOME) {
@@ -60,5 +67,13 @@ fun AppNavGraph(
         composable(Routes.PROFILE) { ProfileScreen(modifier) }
         composable(Routes.CHAT) { ChatScreen(modifier) }
         composable(Routes.SIGN_UP) {}
+        composable(Routes.CLASSES) { ClassesScreen(modifier) }
+
+
+        composable(Routes.ACCEPT_STUDENTS) { AcceptStudentScreen(modifier) }
+        //@TODO: añadir la ruta de sign up
+        //composable(Routes.SIGN_UP) {}
+        composable(Routes.SIGN_UP) {}
+
     }
 }

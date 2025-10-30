@@ -55,4 +55,4 @@ fun AppBottomBar(navController: NavController) {
 }
 
 /** helper para saber si una ruta usa la bottom/top bar */
-val appBarRoutes = setOf(Routes.HOME, Routes.CHAT, Routes.PROFILE, Routes.CLASSES)
+val appBarRoutes = setOf(Routes.HOME, Routes.CHAT, Routes.PROFILE, Routes.CLASSES, Routes.ACCEPT_STUDENTS)
