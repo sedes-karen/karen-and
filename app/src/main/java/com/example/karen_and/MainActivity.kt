@@ -75,8 +75,6 @@ class MainActivity : ComponentActivity() {
                         modifier = paddingModifier
                     )
                 }
-
-
             }
         }
     }

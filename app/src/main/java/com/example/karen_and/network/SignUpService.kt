@@ -4,8 +4,8 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface SignUpApi {
-    @POST("auth/signUp")
-    suspend fun signUp(@Body body: SingUpRequest): SignUpResponse
+    @POST("users/register")
+    suspend fun signUp(@Body body: SingUpRequest): SignUpResponseWrapper
 }
 
 data class SingUpRequest(
@@ -15,7 +15,12 @@ data class SingUpRequest(
     val password: String
 )
 
-data class SignUpResponse(
+data class SignUpResponseWrapper(
+    val message: String,
+    val user: SignUpUserResponse
+)
+
+data class SignUpUserResponse(
     val userId: String,
     val email: String,
     val name: String,
@@ -30,6 +35,6 @@ object SignUpService {
         return registeredEmails.contains(email)
     }
 
-    suspend fun signUp(name: String, lastname: String, email: String, password: String): Result<SignUpResponse> =
+    suspend fun signUp(name: String, lastname: String, email: String, password: String): Result<SignUpResponseWrapper> =
         runCatching { api.signUp(SingUpRequest(name, lastname, email, password)) }
 }
