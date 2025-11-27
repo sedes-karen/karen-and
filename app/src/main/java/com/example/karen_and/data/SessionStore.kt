@@ -10,6 +10,7 @@ class SessionStore(private val prefs: SharedPreferences) {
         private const val USER_TYPE_KEY = "user_type"
         private const val USER_NAME_KEY = "user_name"
         private const val USER_LASTNAME_KEY = "user_lastname"
+        private const val USER_EMAIL_KEY = "user_email"
 
     }
 
@@ -18,6 +19,7 @@ class SessionStore(private val prefs: SharedPreferences) {
             .putString(TOKEN_KEY, token)
             .putString(USER_TYPE_KEY, user.typeUser.name)
             .putString(USER_NAME_KEY, user.name)
+            .putString(USER_EMAIL_KEY, user.email)
             .putString(USER_LASTNAME_KEY, user.lastname)
             .apply()
     }
@@ -31,6 +33,7 @@ class SessionStore(private val prefs: SharedPreferences) {
 
     fun getUserName(): String? = prefs.getString(USER_NAME_KEY, null)
     fun getUserLastname(): String? = prefs.getString(USER_LASTNAME_KEY, null)
+    fun getUserEmail(): String? = prefs.getString(USER_EMAIL_KEY, null)
 
     fun clearSession() {
         prefs.edit()

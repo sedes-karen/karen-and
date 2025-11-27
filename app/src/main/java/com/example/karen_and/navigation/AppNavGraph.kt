@@ -58,9 +58,6 @@ fun AppNavGraph(
         composable(Routes.HOME) {
             HomeScreen(
                 modifier = modifier,
-                onNavigateToClasses = { navController.navigate(Routes.CLASSES) },
-                onNavigateToProfile = { navController.navigate(Routes.PROFILE) },
-                onNavigateToChat = { navController.navigate(Routes.CHAT) },
             )
         }
         composable(Routes.CLASSES) {
