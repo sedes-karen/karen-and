@@ -23,126 +23,69 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    onNavigateToClasses: () -> Unit,
-    onNavigateToProfile: () -> Unit,
-    onNavigateToChat: () -> Unit
 ) {
-    val coroutineScope = rememberCoroutineScope()
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-
     val purpleColor = Color(0xFF8A2BE2)
     val whiteColor = Color.White
 
-
-    ModalNavigationDrawer(
-        drawerContent = {
-            ModalDrawerSheet(
-                modifier = Modifier.width(300.dp),
-                drawerContainerColor = purpleColor
-            ) {
-                AppDrawerContent(
-                    onNavigateToHome = { coroutineScope.launch { drawerState.close() } },
-                    onNavigateToProfile = {
-                        coroutineScope.launch { drawerState.close() }
-                        onNavigateToProfile()
-                    },
-                    onNavigateToClasses = onNavigateToClasses,
-                    onNavigateToChat = {
-                        coroutineScope.launch { drawerState.close() }
-                        onNavigateToChat()
-                    }
-                )
-            }
-        },
-        drawerState = drawerState
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(whiteColor)
+            .padding(horizontal = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text("Pantalla Principal", color = whiteColor) },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            coroutineScope.launch {
-                                drawerState.apply { if (isClosed) open() else close() }
-                            }
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.Menu,
-                                contentDescription = "Menú",
-                                tint = whiteColor
-                            )
-                        }
-                    },
-                    actions = {
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = purpleColor
-                    )
-                )
-            }
-        ) { innerPadding ->
-            Column(
-                modifier = modifier
-                    .fillMaxSize()
-                    .background(whiteColor)
-                    .padding(innerPadding)
-                    .padding(horizontal = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceBetween
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                "Bienvenido",
+                color = Color.Black,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Image(
+                painter = painterResource(id = R.drawable.ic_welcome),
+                contentDescription = "Bienvenido",
+                modifier = Modifier.size(200.dp)
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Divider(
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .padding(bottom = 8.dp),
+                color = Color.LightGray.copy(alpha = 0.7f),
+                thickness = 1.dp
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Text(
-                        "Bienvenido",
-                        color = Color.Black,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_welcome),
-                        contentDescription = "Bienvenido",
-                        modifier = Modifier.size(200.dp)
-                    )
-
-                    Spacer(modifier = Modifier.height(32.dp))
-                }
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Divider(
-                        modifier = Modifier
-                            .fillMaxWidth(0.8f)
-                            .padding(bottom = 8.dp),
-                        color = Color.LightGray.copy(alpha = 0.7f),
-                        thickness = 1.dp
-                    )
-
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "¿Encontraste un problema?",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = Color.Gray
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = "Reportar error",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = purpleColor,
-                            modifier = Modifier.clickable { /* Lógica para reportar error */ }
-                        )
-                    }
-                }
+                Text(
+                    text = "¿Encontraste un problema?",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color.Gray
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(
+                    text = "Reportar error",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = purpleColor,
+                    modifier = Modifier.clickable { /* Lógica para reportar error */ }
+                )
             }
         }
     }
