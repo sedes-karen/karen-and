@@ -3,14 +3,17 @@ package com.example.karen_and.ui.components
 
 import android.content.Context
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import com.example.karen_and.data.SessionStore
-import com.example.karen_and.navigation.AppDrawerContent
+
+import com.example.karen_and.screens.AppDrawerContent
 import com.example.karen_and.navigation.AppTopBar
-import com.example.karen_and.navigation.Routes
 import kotlinx.coroutines.launch
 
 @Composable
@@ -34,26 +37,31 @@ fun AppScaffold(
         SessionStore(prefs)
     }
 
+    val purpleColor = Color(0xFF8A2BE2)
 
     if (showChrome) {
         val drawerState = rememberDrawerState(DrawerValue.Closed)
 
+    val coroutineScope = rememberCoroutineScope()
+
         ModalNavigationDrawer(
             drawerState = drawerState,
             drawerContent = {
-                ModalDrawerSheet {
+                ModalDrawerSheet(
+                    modifier = Modifier.width(300.dp),
+                    drawerContainerColor = purpleColor
+                ) {
                     AppDrawerContent(
                         selectedRoute = currentRoute,
                         onNavigate = { route ->
                             onNavigateFromDrawer(route)
-                            scope.launch { drawerState.close() }
+                            coroutineScope.launch { drawerState.close() }
                         },
                         onLogout = {
                             scope.launch { drawerState.close() }
                             onLogout()
                         },
                         sessionStore = sessionStore
-
                     )
                 }
             }
