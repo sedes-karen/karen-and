@@ -2,8 +2,6 @@
     <string name="app_name">Karen</string>
     <string name="home">Inicio</string>
     <string name="profile">Perfil</string>
-    <string name="chat">Chat</string>
-    <string name="classes">Clases</string>
     <string name="open_menu">Abrir menú</string>
     <string name="title_activity_login_screen">LoginScreen</string>
     <string name="login_title">Iniciar sesión</string>
@@ -11,9 +9,22 @@
     <string name="email_label">Email</string>
     <string name="email_placeholder">someone@example.com</string>
     <string name="password_label">Contraseña</string>
+    <string name="password_confirm">Confirmar contraseña</string>
+    <string name="name_label">Nombre</string>
+    <string name="lastname_label">Apellido</string>
+    <string name="birthday_label">Fecha de cumpleaños</string>
+    <string name="date_label">Seleccionar fecha</string>
     <string name="login_text">Iniciar con</string>
     <string name="register_link_title">¿No tienes una cuenta?</string>
+    <string name="register_title">Registrarse</string>
+    <string name="login_link">¿Ya tienes una cuenta?</string>
+    <string name="chat">Chat</string>
+    <string name="classes">Clases</string>
+    <string name="classes_details">Detalles de la clase</string>
+    <string name="success_message_login">Sesión iniciada correctamente</string>
+    <string name="error_message">Ocurrió un error</string>
+    <string name="continue_button_text">Continuar</string>
+    <string name="finish_button_text">Terminar</string>
     <string name="register_link">Registrarse</string>
-
     <string name="accept_students">Aceptar Alumnos</string>
 </resources>

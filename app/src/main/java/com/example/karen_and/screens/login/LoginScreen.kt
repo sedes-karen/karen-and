@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import com.example.karen_and.R
+import com.example.karen_and.navigation.Routes
 import com.example.karen_and.ui.components.AppButton
 import com.example.karen_and.ui.components.AppInput
 import com.example.karen_and.ui.theme.AppTypography
@@ -66,11 +67,17 @@ fun LoginScreen(
         viewModel.events.collect { event ->
             when (event) {
                 is UIEvents.ShowSnackbar -> showSnackbar(event.message)
+                is UIEvents.Navigate -> {
+                    when (event.route) {
+                        Routes.HOME -> onNavigateHome()
+                        Routes.SIGN_UP -> onNavigateSignUp()
+                        else -> {}
+                    }
+                }
                 else -> {}
             }
         }
     }
-
     Column (
         modifier = Modifier
             .fillMaxWidth()
@@ -96,7 +103,7 @@ fun LoginScreen(
             modifier = Modifier.padding(top = 10.dp, bottom = 20.dp)
         )
 
-        Spacer(modifier = Modifier.height(15.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             text = stringResource(R.string.email_label),
@@ -115,7 +122,7 @@ fun LoginScreen(
             hasBorder = false
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         Text(
             text = stringResource(R.string.password_label),
@@ -143,7 +150,7 @@ fun LoginScreen(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 5.dp)
         )
 
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(40.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -193,11 +200,12 @@ fun LoginScreen(
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
-                text = stringResource(R.string.register_link),
+                text = stringResource(R.string.register_title),
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.clickable { onNavigateSignUp() }
             )
+
         }
     }
 }
