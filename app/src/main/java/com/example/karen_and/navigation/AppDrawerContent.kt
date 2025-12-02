@@ -17,13 +17,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.karen_and.R
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Chat
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.CheckBox
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import com.example.karen_and.data.SessionStore
+import com.example.karen_and.models.UserType
 import com.example.karen_and.navigation.Routes
 import com.example.karen_and.ui.components.LogoutButton
 
@@ -53,12 +58,22 @@ fun AppDrawerContent(
     val chipBackgroundColor = Color.White.copy(alpha = 0.2f)
 
 
-    val drawerItems = listOf(
-        DrawerDataClass(Icons.Default.Home, "Inicio", Routes.HOME),
-        DrawerDataClass(Icons.Default.Person, "Mi Perfil", Routes.PROFILE),
-        DrawerDataClass(Icons.Default.List, "Clases", Routes.CLASSES),
-        DrawerDataClass(Icons.Default.Chat, "Chat", Routes.CHAT),
+    val baseDrawerItems = listOf(
+        DrawerDataClass(Icons.Default.Home, stringResource(R.string.home), Routes.HOME),
+        DrawerDataClass(Icons.Default.Person, stringResource(R.string.my_profile), Routes.PROFILE),
+        DrawerDataClass(Icons.AutoMirrored.Filled.List, stringResource(R.string.classes), Routes.CLASSES),
+        DrawerDataClass(Icons.AutoMirrored.Filled.Chat, stringResource(R.string.chat), Routes.CHAT),
     )
+
+    val role = remember {
+        sessionStore.getUserType()
+    }
+    
+    val drawerItems = if (role == UserType.TEACHER) {
+        baseDrawerItems + DrawerDataClass(Icons.Default.CheckBox, stringResource(R.string.accept_students), Routes.ACCEPT_STUDENTS )
+    } else {
+        baseDrawerItems
+    }
 
     Column(
         modifier = modifier
